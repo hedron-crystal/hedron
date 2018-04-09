@@ -1,6 +1,6 @@
 require "./spec_helper"
 
-describe Libui do
+describe Hedron do
   # TODO: Write tests
 
   it "works" do
