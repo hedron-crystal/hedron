@@ -3,6 +3,9 @@ require "./control.cr"
 
 module Hedron
   class Window < Control
+    @@size_change_box : Void*?
+    @@close_box : Void*?
+
     @name       : String
     @dimensions : Tuple(Int32, Int32)
     @menubar    : Bool
@@ -68,12 +71,38 @@ module Hedron
       UI.window_set_title(to_unsafe, window_title)
     end
 
-    def on_size_change=(proc : Proc(UI::Window*, Void*, Void))
-      UI.window_on_content_size_changed(to_unsafe, proc, nil)
+    def on_size_change(&block)
+      on_size_change = block
     end
 
-    def on_close=(proc : Proc(UI::Window*, Void*, LibC::Int))
-      UI.window_on_closing(to_unsafe, proc, nil)
+    def on_size_change=(proc : Proc(Window, Nil))
+      boxed_data = ::Box.box(proc)
+      @@size_change_box = boxed_data
+      @@window = self
+
+      new_proc = ->(w : UI::Window*, data : Void*) {
+        callback = ::Box(Proc(Window, Nil)).unbox(data)
+        callback.call(@@window.not_nil!)
+      }
+
+      UI.window_on_content_size_changed(to_unsafe, new_proc, boxed_data)
+    end
+
+    def on_close(&block)
+      on_close = block
+    end
+
+    def on_close=(proc : Proc(Window, Bool))
+      boxed_data = ::Box.box(proc)
+      @@close_box = boxed_data
+      @@window = self
+
+      new_proc = ->(w : UI::Window*, data : Void*) {
+        callback = ::Box(Proc(Window, Bool)).unbox(data)
+        return callback.call(@@window.not_nil!) ? 1 : 0
+      }
+
+      UI.window_on_closing(to_unsafe, new_proc, boxed_data)
     end
 
     def error(title : String = "", description : String = "")

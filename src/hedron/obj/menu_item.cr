@@ -37,18 +37,31 @@ module Hedron
   end
 
   class MenuItem < SuperMenuItem
+    @@box : Void*?
+
     @name : String
-    @proc : Proc(UI::MenuItem*, UI::Window*, Void*, Nil)
+    @proc : Proc(MenuItem, Nil)
 
     @state : Bool = true
 
-    def initialize(@name, on_click = ->(item : UI::MenuItem*, w : UI::Window*, data : Void*) { })
+    def initialize(@name, on_click = ->(this : MenuItem) { })
       @proc = on_click
     end
 
     def add_menu(menu : UI::Menu*)
       @this = UI.menu_append_item(menu, @name)
-      UI.menu_item_on_clicked(to_unsafe, @proc, nil)
+      
+      boxed_data = ::Box.box(@proc)
+      @@box = boxed_data
+      @@item = self
+
+      new_proc = ->(item : UI::MenuItem*, window : UI::Window*, data : Void*) {
+        puts window
+        callback = ::Box(Proc(MenuItem, Nil)).unbox(data)
+        callback.call(@@item.not_nil!)
+      }
+
+      UI.menu_item_on_clicked(to_unsafe, new_proc, boxed_data)
       disable unless @enabled
     end
   end

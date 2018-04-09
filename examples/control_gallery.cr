@@ -1,4 +1,4 @@
-require "../../src/libui/obj/*"
+require "../src/hedron/obj/*"
 
 class ControlGallery
   # Note: @@mainwin is a class variable because
@@ -8,20 +8,21 @@ class ControlGallery
     @@app = Hedron::Application.new
     app = @@app.not_nil!
 
-    on_closing = ->(w : UI::Window*, data : Void*) {
-      @@mainwin.not_nil!.destroy
+    on_closing = ->(this : Hedron::Window) {
+      this.destroy
       @@app.not_nil!.stop
-      0
+      return false
     }
 
-    should_quit = ->(data : Void*) {
+    should_quit = ->() {
       @@mainwin.not_nil!.destroy
-      1
+      return true
     }
 
-    open_clicked = ->(item : UI::MenuItem*, w : UI::Window*, data : Void*) {
+    open_clicked = ->(this : Hedron::MenuItem) {
       mainwin = @@mainwin.not_nil!
       filename = @@app.not_nil!.open_file(mainwin)
+
       if filename.nil?
         mainwin.error(title: "No file selected", description: "Don't be alarmed!")
       else
@@ -29,9 +30,10 @@ class ControlGallery
       end
     }
 
-    save_clicked = ->(item : UI::MenuItem*, w : UI::Window*, data : Void*) {
+    save_clicked = ->(this : Hedron::MenuItem) {
       mainwin = @@mainwin.not_nil!
       filename = @@app.not_nil!.save_file(mainwin)
+
       if filename.nil?
         mainwin.error(title: "No file selected", description: "Don't be alarmed!")
       else
@@ -39,14 +41,14 @@ class ControlGallery
       end
     }
 
-    on_spinbox_changed = ->(s : UI::Spinbox*, data : Void*) {
-      value = @@spinbox.not_nil!.value
+    on_spinbox_changed = ->(this : Hedron::Spinbox) {
+      value = this.value
       @@slider.not_nil!.value = value
       @@progressbar.not_nil!.value = value
     }
 
-    on_slider_changed = ->(s : UI::Slider*, data : Void*) {
-      value = @@slider.not_nil!.value
+    on_slider_changed = ->(this : Hedron::Slider) {
+      value = this.value
       @@spinbox.not_nil!.value = value
       @@progressbar.not_nil!.value = value
     }
