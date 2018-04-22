@@ -1,4 +1,4 @@
-require "../src/hedron/obj/*"
+require "../src/hedron.cr"
 
 class ControlGallery
   # Note: @@mainwin is a class variable because
@@ -90,7 +90,8 @@ class ControlGallery
 
     hbox = Hedron::HorizontalBox.new
     hbox.padded = true
-    box.add(hbox, stretchy: true)
+    hbox.stretchy = true
+    box.add(hbox)
 
     group = Hedron::Group.new("Basic Controls")
     group.margined = true
@@ -100,25 +101,28 @@ class ControlGallery
     inner.padded = true
     group.child = inner
 
-    inner.add(Hedron::Button.new("Button"))
-    inner.add(Hedron::Checkbox.new("Checkbox"))
+    inner.add_all(
+      Hedron::Button.new("Button"),
+      Hedron::Checkbox.new("Checkbox")
+    )
 
     entry = Hedron::Entry.new
     entry.text = "Entry"
-    inner.add(entry)
-    inner.add(Hedron::Label.new("Label"))
+    inner.add_all(entry, Hedron::Label.new("Label"))
     
-    inner.add(Hedron::HorizontalSeparator.new)
-    inner.add(Hedron::DatePicker.new)
-    inner.add(Hedron::TimePicker.new)
-    inner.add(Hedron::DateTimePicker.new)
+    inner.add_all(
+      Hedron::HorizontalSeparator.new,
+      Hedron::DatePicker.new,
+      Hedron::TimePicker.new,
+      Hedron::DateTimePicker.new
+    )
 
-    inner.add(Hedron::FontButton.new)
-    inner.add(Hedron::ColorButton.new)
+    inner.add_all(Hedron::FontButton.new, Hedron::ColorButton.new)
 
     inner2 = Hedron::VerticalBox.new
     inner2.padded = true
-    hbox.add(inner2, stretchy: true)
+    inner2.stretchy = true
+    hbox.add(inner2)
 
     group = Hedron::Group.new("Numbers")
     group.margined = true
@@ -160,13 +164,15 @@ class ControlGallery
 
     rb = Hedron::RadioButtons.new
     rb.add_all("Radio Button 1", "Radio Button 2", "Radio Button 3")
-    inner.add(rb, stretchy: true)
+    rb.stretchy = true
+    inner.add(rb)
 
     tab = Hedron::Tab.new
     tab.add("Page 1", Hedron::HorizontalBox.new)
     tab.add("Page 2", Hedron::HorizontalBox.new)
     tab.add("Page 3", Hedron::HorizontalBox.new)
-    inner2.add(tab, stretchy: true)
+    tab.stretchy = true
+    inner2.add(tab)
 
     mainwin.show
 

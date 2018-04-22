@@ -37,4 +37,16 @@ module Hedron
       @this
     end
   end
+
+  class PasswordEntry < Entry
+    def initialize
+      @this = UI.new_password_entry
+    end
+  end
+
+  class SearchEntry < Entry
+    def initialize
+      @this = UI.new_search_entry
+    end
+  end
 end

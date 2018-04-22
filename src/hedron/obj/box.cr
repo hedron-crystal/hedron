@@ -11,9 +11,13 @@ module Hedron
       return int == 1 ? true : false
     end
 
-    def add(control : Control, stretchy : Bool = false)
+    def add(control : Control)
       control.parent = self
-      UI.box_append(to_unsafe, ui_control(control.to_unsafe), to_int(stretchy))
+      UI.box_append(to_unsafe, ui_control(control.to_unsafe), to_int(control.stretchy))
+    end
+
+    def add_all(*controls : Control)
+      controls.each { |control| add(control) }
     end
 
     def delete(index : Int32)

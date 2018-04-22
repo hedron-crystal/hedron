@@ -14,9 +14,7 @@ module Hedron
     end
 
     def add_all(*items : SuperMenuItem)
-      items.each do |item|
-        add(item)
-      end
+      items.each { |item| add(item) }
     end
 
     def add_separator

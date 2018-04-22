@@ -1,5 +1,5 @@
 require "../bindings.cr"
-require "../color.cr"
+require "../structs/color.cr"
 require "./control.cr"
 
 module Hedron

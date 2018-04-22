@@ -1,7 +1,8 @@
 require "./control.cr"
 
 module Hedron
-  class MultilineEntry
+  class MultilineEntry < Control
+    @wrapping : Bool
     @this : UI::MultilineEntry*
 
     private def to_int(bool : Bool) : Int32
@@ -12,8 +13,8 @@ module Hedron
       return int == 1 ? true : false
     end
 
-    def initialize
-      @this = UI.new_multiline_entry
+    def initialize(@wrapping)
+      @this = @wrapping ? UI.new_multiline_entry : UI.new_non_wrapping_multiline_entry
     end
 
     def add(entry_text : String)

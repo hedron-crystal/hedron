@@ -3,6 +3,7 @@ require "../bindings.cr"
 module Hedron
   abstract class Control
     property parent : Control?
+    property stretchy : Bool = false
 
     private def to_int(bool : Bool) : Int32
       return bool ? 1 : 0
