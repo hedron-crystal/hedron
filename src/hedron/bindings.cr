@@ -567,11 +567,11 @@ lib UI
 end
 
 macro ui_control(control)
-  {{control}}.as(UI::Control*)
+  {{control}}.unsafe_as(Pointer(UI::Control))
 end
 
 macro ui_box(control)
-  {{control}}.as(UI::Box*)
+  {{control}}.unsafe_as(Pointer(UI::Box))
 end
 
 macro ui_nil?(ptr)

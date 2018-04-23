@@ -108,16 +108,17 @@ class ControlGallery
 
     entry = Hedron::Entry.new
     entry.text = "Entry"
-    inner.add_all(entry, Hedron::Label.new("Label"))
     
     inner.add_all(
+      entry,
+      Hedron::Label.new("Label"),
       Hedron::HorizontalSeparator.new,
       Hedron::DatePicker.new,
       Hedron::TimePicker.new,
-      Hedron::DateTimePicker.new
+      Hedron::DateTimePicker.new,
+      Hedron::FontButton.new,
+      Hedron::ColorButton.new
     )
-
-    inner.add_all(Hedron::FontButton.new, Hedron::ColorButton.new)
 
     inner2 = Hedron::VerticalBox.new
     inner2.padded = true
@@ -168,9 +169,9 @@ class ControlGallery
     inner.add(rb)
 
     tab = Hedron::Tab.new
-    tab.add("Page 1", Hedron::HorizontalBox.new)
-    tab.add("Page 2", Hedron::HorizontalBox.new)
-    tab.add("Page 3", Hedron::HorizontalBox.new)
+    tab["Page 1"] = Hedron::HorizontalBox.new
+    tab["Page 2"] = Hedron::HorizontalBox.new
+    tab["Page 3"] = Hedron::HorizontalBox.new
     tab.stretchy = true
     inner2.add(tab)
 

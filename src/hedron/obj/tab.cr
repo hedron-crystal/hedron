@@ -17,7 +17,7 @@ module Hedron
       @this = UI.new_tab
     end
 
-    def add(name : String, control : Control)
+    def []=(name : String, control : Control)
       UI.tab_append(to_unsafe, name, ui_control(control.to_unsafe))
     end
 

@@ -13,7 +13,7 @@ module Hedron
 
     def add(control : Control)
       control.parent = self
-      UI.box_append(to_unsafe, ui_control(control.to_unsafe), to_int(control.stretchy))
+      UI.box_append(to_unsafe, ui_control(control.to_unsafe), to_int(control.stretchy?))
     end
 
     def add_all(*controls : Control)
