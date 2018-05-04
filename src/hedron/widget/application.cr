@@ -9,8 +9,7 @@ module Hedron
       err = UI.init(pointerof(options))
 
       unless ui_nil?(err)
-        puts "Error initializing ui: #{err}"
-        exit 1
+        raise UIError.new("Error initializing UI: #{err}")
       end
     end
 

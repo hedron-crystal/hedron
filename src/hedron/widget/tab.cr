@@ -1,8 +1,9 @@
 require "../bindings.cr"
 require "./control.cr"
+require "./container.cr"
 
 module Hedron
-  class Tab < Control
+  class Tab < IndexedContainer
     @this : UI::Tab*
 
     private def to_int(bool : Bool) : Int32

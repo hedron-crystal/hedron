@@ -1,9 +1,9 @@
 require "../bindings.cr"
 require "./control.cr"
+require "./container.cr"
 
 module Hedron
-  class Group < Control
-    @name : String
+  class Group < Container
     @this : UI::Group*
 
     private def to_int(bool : Bool) : Int32
@@ -14,8 +14,12 @@ module Hedron
       return int == 1 ? true : false
     end
 
-    def initialize(@name)
-      @this = UI.new_group(@name)
+    def initialize
+      @this = UI.new_group("")
+    end
+
+    def initialize(title : String)
+      @this = UI.new_group(title)
     end
 
     def margined : Bool

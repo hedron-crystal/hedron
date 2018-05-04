@@ -56,7 +56,6 @@ module Hedron
       @@item = self
 
       new_proc = ->(item : UI::MenuItem*, window : UI::Window*, data : Void*) {
-        puts window
         callback = ::Box(Proc(MenuItem, Nil)).unbox(data)
         callback.call(@@item.not_nil!)
       }

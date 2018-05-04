@@ -1,8 +1,9 @@
 require "../bindings.cr"
 require "./control.cr"
+require "./container.cr"
 
 module Hedron
-  class Window < Control
+  class Window < Container
     @@size_change_box : Void*?
     @@close_box : Void*?
 

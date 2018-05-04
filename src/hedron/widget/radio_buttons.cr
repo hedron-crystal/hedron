@@ -9,13 +9,9 @@ module Hedron
       @this = UI.new_radio_buttons
     end
 
-    def add(choice : String)
-      UI.radio_buttons_append(to_unsafe, choice)
-    end
-
-    def add_all(*choices : String)
+    def choices=(choices : Array(String))
       choices.each do |choice|
-        add(choice)
+        UI.radio_buttons_append(to_unsafe, choice)
       end
     end
 

@@ -1,5 +1,3 @@
 require "./hedron/**"
 
-module Hedron
-  # TODO Put your code here
-end
+puts Hedron::Lexer.lex("examples/ml_gallery/main.hdml")

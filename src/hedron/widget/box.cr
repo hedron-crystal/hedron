@@ -1,8 +1,9 @@
 require "../bindings.cr"
 require "./control.cr"
+require "./container.cr"
 
 module Hedron
-  abstract class Box < Control
+  abstract class Box < MultipleContainer
     private def to_int(bool : Bool) : Int32
       return bool ? 1 : 0
     end

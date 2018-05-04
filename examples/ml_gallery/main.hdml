@@ -1,0 +1,21 @@
+Window {
+  name: "HDML test";
+  dimensions: [640, 480];
+  
+  Group {
+    margined: true;
+    
+    VerticalBox {
+      padded: true;
+      stretchy: true;
+
+      Label #label {
+        @text: "You have clicked the button 0 times.";
+      }
+
+      Button #button {
+        @text: "Click me!";
+      }
+    }
+  }
+}

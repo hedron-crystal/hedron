@@ -3,7 +3,6 @@ require "./control.cr"
 
 module Hedron
   class Checkbox < Control
-    @name : String
     @this : UI::Checkbox*
 
     private def to_int(bool : Bool) : Int32
@@ -14,8 +13,12 @@ module Hedron
       return int == 1 ? true : false
     end
 
-    def initialize(@name)
-      @this = UI.new_checkbox(@name)
+    def initialize
+      @this = UI.new_checkbox("")
+    end
+
+    def initialize(text : String)
+      @this = UI.new_checkbox(text)
     end
 
     def checked? : Bool

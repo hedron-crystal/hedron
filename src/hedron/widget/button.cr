@@ -3,11 +3,10 @@ require "./control.cr"
 
 module Hedron
   class Button < Control
-    @name : String
     @this : UI::Button*
 
-    def initialize(@name)
-      @this = UI.new_button(@name)
+    def initialize(text : String)
+      @this = UI.new_button(text)
     end
 
     def on_click=(proc : Proc(UI::Button*, Void*, Void))

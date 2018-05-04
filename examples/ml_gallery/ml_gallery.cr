@@ -1,13 +1,13 @@
 require "../../src/hedron.cr"
 
-class HdrGallery
+class MLGallery
   def initialize
     @@app = Hedron::Application.new
     app = @@app.not_nil!
 
-    @@window = Hedron::Window.new
+    @@window = Hedron::Window.new("ML Gallery", {640, 480}, menubar: true)
     window = @@window.not_nil!
   end
 end
 
-HdrGallery.new
+MLGallery.new
