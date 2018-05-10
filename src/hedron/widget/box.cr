@@ -1,9 +1,10 @@
 require "../bindings.cr"
-require "./control.cr"
-require "./container.cr"
+require "./control/*"
 
 module Hedron
   abstract class Box < MultipleContainer
+    include ControlMethods
+    
     private def to_int(bool : Bool) : Int32
       return bool ? 1 : 0
     end
@@ -32,6 +33,10 @@ module Hedron
     def padded=(is_padded : Bool)
       UI.box_set_padded(to_unsafe, to_int(is_padded))
     end
+
+    def set_attribute(key : String, value : Any)
+      gen_attributes({"stretchy" => Bool, "padded" => Bool})
+    end
   end
 
   class VerticalBox < Box
@@ -41,8 +46,12 @@ module Hedron
       @this = UI.new_vertical_box
     end
 
+    def self.init_markup
+      return self.new
+    end
+
     def to_unsafe
-      @this
+      return @this
     end
   end
 
@@ -53,8 +62,12 @@ module Hedron
       @this = UI.new_horizontal_box
     end
 
+    def self.init_markup
+      return self.new
+    end
+
     def to_unsafe
-      @this
+      return @this
     end
   end
 end

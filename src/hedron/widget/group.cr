@@ -1,9 +1,10 @@
 require "../bindings.cr"
-require "./control.cr"
-require "./container.cr"
+require "./control/*"
 
 module Hedron
-  class Group < Container
+  class Group < SingleContainer
+    include ControlMethods
+
     @this : UI::Group*
 
     private def to_int(bool : Bool) : Int32
@@ -14,12 +15,12 @@ module Hedron
       return int == 1 ? true : false
     end
 
-    def initialize
-      @this = UI.new_group("")
-    end
-
     def initialize(title : String)
       @this = UI.new_group(title)
+    end
+
+    def self.init_markup(args : MLArgs)
+      return self.new(args["title"].as(String))
     end
 
     def margined : Bool
@@ -43,8 +44,12 @@ module Hedron
       UI.group_set_child(to_unsafe, ui_control(child.to_unsafe))
     end
 
+    def set_attribute(key : String, value : Any)
+      gen_attributes({"stretchy" => Bool, "margined" => Bool, "title" => String})
+    end
+
     def to_unsafe
-      @this
+      return @this
     end
   end
 end

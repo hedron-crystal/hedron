@@ -1,13 +1,18 @@
 require "../bindings.cr"
-require "./control.cr"
+require "./control/*"
 
 module Hedron
-  class Label < Control
-    @name : String
+  class Label < Widget
+    include ControlMethods
+
     @this : UI::Label*
 
-    def initialize(@name)
-      @this = UI.new_label(@name)
+    def initialize(text : String)
+      @this = UI.new_label(text)
+    end
+
+    def self.init_markup(args : MLArgs)
+      return self.new(args["text"].as(String))
     end
 
     def text : String
@@ -18,8 +23,12 @@ module Hedron
       UI.label_set_text(to_unsafe, label_text)
     end
 
+    def set_attribute(key : String, value : Any)
+      gen_attributes({"stretchy" => Bool, "text" => String})
+    end
+
     def to_unsafe
-      @this
+      return @this
     end
   end
 end

@@ -1,12 +1,20 @@
 require "../bindings.cr"
-require "./control.cr"
+require "./control/*"
 
 module Hedron
-  class Combobox < Control
+  class Combobox < Widget
+    include ControlMethods
+
+    @@box : Void*?
+
     @this : UI::Combobox*
 
     def initialize
       @this = UI.new_combobox
+    end
+
+    def self.init_markup
+      return self.new
     end
 
     def choices=(choices : Array(String))
@@ -15,8 +23,21 @@ module Hedron
       end
     end
 
-    def on_select=(proc : Proc(UI::Combobox*, Void*, Void))
-      UI.combobox_on_selected(to_unsafe, proc, nil)
+    def on_select(&block : Combobox ->)
+      self.on_select = block
+    end
+
+    def on_select=(proc : Proc(Combobox, Nil))
+      boxed_data = ::Box.box(proc)
+      @@box = boxed_data
+      @@combobox = self
+
+      new_proc = ->(combobox : UI::Combobox*, data : Void*) {
+        callback = ::Box(Proc(Combobox, Nil)).unbox(data)
+        callback.call(@@combobox.not_nil!)
+      }
+
+      UI.combobox_on_selected(to_unsafe, new_proc, boxed_data)
     end
 
     def selected : Int32
@@ -27,8 +48,12 @@ module Hedron
       UI.combobox_set_selected(to_unsafe, index)
     end
 
+    def set_attribute(key : String, value : Any)
+      gen_attributes({"stretchy" => Bool, "selected" => Int32})
+    end
+
     def to_unsafe
-      @this
+      return @this
     end
   end
 end

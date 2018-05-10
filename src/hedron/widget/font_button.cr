@@ -1,12 +1,20 @@
 require "../bindings.cr"
-require "./control.cr"
+require "./control/*"
 
 module Hedron
-  class FontButton < Control
+  class FontButton < Widget
+    include ControlMethods
+
+    @@box : Void*?
+
     @this : UI::FontButton*
 
     def initialize
       @this = UI.new_font_button
+    end
+
+    def self.init_markup
+      return self.new
     end
 
     def font : UI::FontDescriptor
@@ -14,12 +22,29 @@ module Hedron
       return button_font
     end
 
-    def on_change=(proc : Proc(UI::FontButton*, Void*, Void))
-      UI.font_button_on_changed(to_unsafe, proc, nil)
+    def on_change=(&block : FontButton ->)
+      self.on_change = block
+    end
+
+    def on_change=(proc : Proc(FontButton, Void))
+      boxed_data = ::Box.box(proc)
+      @@box = boxed_data
+      @@font_button = self
+
+      new_proc = ->(font_button : UI::FontButton*, data : Void*) {
+        callback = ::Box(Proc(FontButton, Nil)).unbox(data)
+        callback.call(@@font_button.not_nil!)
+      }
+
+      UI.font_button_on_changed(to_unsafe, new_proc, boxed_data)
+    end
+
+    def set_attribute(key : String, value : Any)
+      gen_attributes({"stretchy" => Bool})
     end
 
     def to_unsafe
-      @this
+      return @this
     end
   end
 end

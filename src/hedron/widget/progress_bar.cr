@@ -1,12 +1,18 @@
 require "../bindings.cr"
-require "./control.cr"
+require "./control/*"
 
 module Hedron
-  class ProgressBar < Control
+  class ProgressBar < Widget
+    include ControlMethods
+
     @this : UI::ProgressBar*
 
     def initialize
       @this = UI.new_progress_bar
+    end
+
+    def self.init_markup
+      return self.new
     end
 
     def value : Int32
@@ -17,8 +23,12 @@ module Hedron
       UI.progress_bar_set_value(to_unsafe, val)
     end
 
+    def set_attribute(key : String, value : Any)
+      gen_attributes({"stretchy" => Bool, "value" => Int32})
+    end
+
     def to_unsafe
-      @this
+      return @this
     end
   end
 end

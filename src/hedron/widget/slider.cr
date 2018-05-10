@@ -1,15 +1,20 @@
 require "../bindings.cr"
-require "./control.cr"
+require "./control/*"
 
 module Hedron
-  class Slider < Control
+  class Slider < Widget
+    include ControlMethods
+
     @@box : Void*?
 
-    @bounds : Tuple(Int32, Int32)
     @this : UI::Slider*
 
-    def initialize(@bounds)
-      @this = UI.new_slider(@bounds[0], @bounds[1])
+    def initialize(bounds : Tuple(Int32, Int32))
+      @this = UI.new_slider(bounds[0], bounds[1])
+    end
+
+    def self.init_markup(args : MLArgs)
+      return self.new({args["upper"].as(Int32), args["lower"].as(Int32)})
     end
 
     def on_change(&block)
@@ -37,8 +42,12 @@ module Hedron
       UI.slider_set_value(to_unsafe, val)
     end
 
+    def set_attribute(key : String, value : Any)
+      gen_attributes({"stretchy" => Bool, "value" => Int32})
+    end
+
     def to_unsafe
-      @this
+      return @this
     end
   end
 end

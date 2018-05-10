@@ -1,8 +1,10 @@
 require "../bindings.cr"
-require "./control.cr"
+require "./control/*"
 
 module Hedron
-  abstract class Separator < Control; end
+  abstract class Separator < Widget
+    include ControlMethods
+  end
 
   class HorizontalSeparator < Separator
     @this : UI::Separator*
@@ -11,8 +13,12 @@ module Hedron
       @this = UI.new_horizontal_separator
     end
 
+    def self.init_markup
+      return self.new
+    end
+
     def to_unsafe
-      @this
+      return @this
     end
   end
 
@@ -24,7 +30,7 @@ module Hedron
     end
 
     def to_unsafe
-      @this
+      return @this
     end
   end
 end

@@ -1,16 +1,26 @@
 require "../bindings.cr"
-require "./control.cr"
+require "./control/*"
 
 module Hedron
-  class DateTimePicker < Control
+  class DateTimePicker < Widget
+    include ControlMethods
+
     @this : UI::DateTimePicker*
 
     def initialize
       @this = UI.new_date_time_picker
     end
 
+    def self.init_markup
+      return self.new
+    end
+
+    def set_attribute(key : String, value : Any)
+      gen_attributes({"stretchy" => Bool})
+    end
+    
     def to_unsafe
-      @this
+      return @this
     end
   end
 

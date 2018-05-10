@@ -1,8 +1,12 @@
 require "../bindings.cr"
-require "./control.cr"
+require "./control/*"
 
 module Hedron
-  class Entry < Control
+  class Entry < Widget
+    include ControlMethods
+
+    @@box : Void*?
+
     @this : UI::Entry*
 
     private def to_int(bool : Bool) : Int32
@@ -15,6 +19,27 @@ module Hedron
 
     def initialize
       @this = UI.new_entry
+    end
+
+    def self.init_markup
+      return self.new
+    end
+
+    def on_change(&block : Button ->)
+      self.on_change = block
+    end
+
+    def on_change=(proc : Proc(Entry, Nil))
+      boxed_data = ::Box.box(proc)
+      @@box = boxed_data
+      @@entry = self
+
+      new_proc = ->(entry : UI::Entry*, data : Void*) {
+        callback = ::Box(Proc(Entry, Nil)).unbox(data)
+        callback.call(@@entry.not_nil!)
+      }
+
+      UI.entry_on_changed(to_unsafe, new_proc, boxed_data)
     end
 
     def read_only? : Bool
@@ -33,8 +58,12 @@ module Hedron
       UI.entry_set_text(to_unsafe, entry_text)
     end
 
+    def set_attribute(key : String, value : Any)
+      gen_attributes({"stretchy" => Bool, "read_only" => Bool, "text" => String})
+    end
+
     def to_unsafe
-      @this
+      return @this
     end
   end
 

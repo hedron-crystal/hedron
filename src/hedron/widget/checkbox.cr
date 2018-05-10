@@ -1,8 +1,10 @@
 require "../bindings.cr"
-require "./control.cr"
+require "./control/*"
 
 module Hedron
-  class Checkbox < Control
+  class Checkbox < Widget
+    include ControlMethods
+
     @this : UI::Checkbox*
 
     private def to_int(bool : Bool) : Int32
@@ -13,12 +15,12 @@ module Hedron
       return int == 1 ? true : false
     end
 
-    def initialize
-      @this = UI.new_checkbox("")
-    end
-
     def initialize(text : String)
       @this = UI.new_checkbox(text)
+    end
+
+    def self.init_markup(args : MLArgs)
+      return self.new(args["text"].as(String))
     end
 
     def checked? : Bool
@@ -37,8 +39,12 @@ module Hedron
       UI.checkbox_set_text(to_unsafe, checkbox_text)
     end
 
+    def set_attribute(key : String, value : Any)
+      gen_attributes({"stretchy" => Bool, "checked" => Bool, "text" => String})
+    end
+
     def to_unsafe
-      @this
+      return @this
     end
   end
 end

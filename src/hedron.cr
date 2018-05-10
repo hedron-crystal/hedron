@@ -1,3 +1,6 @@
-require "./hedron/**"
-
-puts Hedron::Lexer.lex("examples/ml_gallery/main.hdml")
+require "./hedron/exception/*"
+require "./hedron/menu/*"
+require "./hedron/reader/*"
+require "./hedron/struct/*"
+require "./hedron/widget/*"
+require "./hedron/widget/control/container.cr"

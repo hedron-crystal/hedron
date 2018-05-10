@@ -1,8 +1,7 @@
-require "../bindings.cr"
+require "./control.cr"
 
 module Hedron
-  abstract class Control
-    property parent : Control?
+  module ControlMethods
     setter stretchy : Bool = false
 
     private def to_int(bool : Bool) : Int32
@@ -49,14 +48,14 @@ module Hedron
       return to_bool(UI.control_toplevel(ui_control(to_unsafe)))
     end
 
-    def is_parent?(control : Control) : Bool
-      return parent == control
-    end
-
     def visible? : Bool
       return to_bool(UI.control_visible(ui_control(to_unsafe)))
     end
 
-    abstract def to_unsafe
+    def display : Control
+      return self
+    end
+
+    def to_unsafe; end
   end
 end

@@ -1,9 +1,10 @@
 require "../bindings.cr"
-require "./control.cr"
-require "./container.cr"
+require "./control/*"
 
 module Hedron
   class Tab < IndexedContainer
+    include ControlMethods
+
     @this : UI::Tab*
 
     private def to_int(bool : Bool) : Int32
@@ -16,6 +17,10 @@ module Hedron
 
     def initialize
       @this = UI.new_tab
+    end
+
+    def self.init_markup
+      return self.new
     end
 
     def []=(name : String, control : Control)
@@ -34,16 +39,16 @@ module Hedron
       UI.tab_num_pages(to_unsafe)
     end
 
-    def margined? : Bool
-      return to_bool(UI.tab_margined(to_unsafe))
+    def page_margined?(page : Int32) : Bool
+      return to_bool(UI.tab_margined(to_unsafe), page)
     end
 
-    def margined=(is_margined : Bool)
+    def page_margined(page : Int32, is_margined : Bool)
       UI.tab_set_margined(to_unsafe, to_int(is_margined))
     end
 
     def to_unsafe
-      @this
+      return @this
     end
   end
 end

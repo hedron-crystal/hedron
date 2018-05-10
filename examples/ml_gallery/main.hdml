@@ -1,8 +1,11 @@
-Window {
-  name: "HDML test";
-  dimensions: [640, 480];
+Window #window {
+  @title: "HDML test";
+  @width: 640;
+  @height: 480;
+  @menubar: true;
   
   Group {
+    @title: "Group";
     margined: true;
     
     VerticalBox {

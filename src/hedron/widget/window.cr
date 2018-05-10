@@ -1,15 +1,12 @@
 require "../bindings.cr"
-require "./control.cr"
-require "./container.cr"
+require "./control/*"
 
 module Hedron
-  class Window < Container
+  class Window < SingleContainer
+    include ControlMethods
+
     @@size_change_box : Void*?
     @@close_box : Void*?
-
-    @name       : String
-    @dimensions : Tuple(Int32, Int32)
-    @menubar    : Bool
 
     @this : UI::Window*
 
@@ -21,17 +18,24 @@ module Hedron
       return int == 1 ? true : false
     end
 
-    def initialize(@name, @dimensions, menubar : Bool = false)
-      @menubar = menubar
-      @this = UI.new_window(@name, @dimensions[0], @dimensions[1], to_int(@menubar))
+    def initialize(title : String, dimensions : Tuple(Int32, Int32), menubar : Bool = false)
+      @this = UI.new_window(title, dimensions[0], dimensions[1], to_int(menubar))
     end
 
-    def borderless? : Bool
-      return to_bool(UI.window_borderless(to_unsafe))
+    def self.init_markup(args : MLArgs)
+      return self.new(
+        args["title"].as(String),
+        {args["width"].as(Int32), args["height"].as(Int32)},
+        args["menubar"].as(Bool)
+      )
     end
 
-    def borderless=(is_borderless : Bool)
-      UI.window_set_borderless(to_unsafe, to_int(is_borderless))
+    def border? : Bool
+      return !to_bool(UI.window_borderless(to_unsafe))
+    end
+
+    def border=(is_borderless : Bool)
+      UI.window_set_borderless(to_unsafe, to_int(!is_borderless))
     end
 
     def margined? : Bool
@@ -59,9 +63,9 @@ module Hedron
       UI.window_set_fullscreen(to_unsafe, to_int(is_fullscreen))
     end
 
-    def child=(child : Control)
+    def child=(child : Widget)
       child.parent = self
-      UI.window_set_child(to_unsafe, ui_control(child.to_unsafe))
+      UI.window_set_child(to_unsafe, ui_control(child.display.to_unsafe))
     end
 
     def title
@@ -114,8 +118,17 @@ module Hedron
       UI.msg_box(to_unsafe, title, description)
     end
 
+    def set_attribute(key : String, value : Any)
+      gen_attributes({
+        "border" => Bool,
+        "margined" => Bool,
+        "fullscreen" => Bool,
+        "title" => String
+      })
+    end
+
     def to_unsafe
-      @this
+      return @this
     end
   end
 end
