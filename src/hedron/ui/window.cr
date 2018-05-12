@@ -1,5 +1,6 @@
 require "../bindings.cr"
 require "./control/*"
+require "./widget/*"
 
 module Hedron
   class Window < SingleContainer
@@ -18,10 +19,23 @@ module Hedron
       return int == 1 ? true : false
     end
 
+    # Takes three arguments:
+    # - `title`: The title of the window
+    # - `dimensions`: Two Int32 values, {width, height}
+    # - `menubar`: Whether the window has a menubar or not, defaults to false
     def initialize(title : String, dimensions : Tuple(Int32, Int32), menubar : Bool = false)
       @this = UI.new_window(title, dimensions[0], dimensions[1], to_int(menubar))
     end
 
+    # Takes 4 arguments:
+    # ```
+    # Window {
+    #   @title: "Foo";
+    #   @width: 640;
+    #   @height: 480;
+    #   @menubar: false;
+    # }
+    # ```
     def self.init_markup(args : MLArgs)
       return self.new(
         args["title"].as(String),

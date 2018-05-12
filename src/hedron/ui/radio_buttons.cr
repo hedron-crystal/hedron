@@ -1,16 +1,17 @@
 require "../bindings.cr"
 require "./control/*"
+require "./widget/*"
 
 module Hedron
-  class Combobox < Widget
+  class RadioButtons < Widget
     include ControlMethods
 
     @@box : Void*?
 
-    @this : UI::Combobox*
+    @this : UI::RadioButtons*
 
     def initialize
-      @this = UI.new_combobox
+      @this = UI.new_radio_buttons
     end
 
     def self.init_markup
@@ -19,33 +20,33 @@ module Hedron
 
     def choices=(choices : Array(String))
       choices.each do |choice|
-        UI.combobox_append(to_unsafe, choice)
+        UI.radio_buttons_append(to_unsafe, choice)
       end
     end
 
-    def on_select(&block : Combobox ->)
+    def on_select(&block : RadioButtons ->)
       self.on_select = block
     end
 
-    def on_select=(proc : Proc(Combobox, Nil))
+    def on_select=(proc : Proc(RadioButtons, Nil))
       boxed_data = ::Box.box(proc)
       @@box = boxed_data
-      @@combobox = self
+      @@rbuttons = self
 
-      new_proc = ->(combobox : UI::Combobox*, data : Void*) {
-        callback = ::Box(Proc(Combobox, Nil)).unbox(data)
-        callback.call(@@combobox.not_nil!)
+      new_proc = ->(rbuttons : RadioButtons, data : Void*) {
+        callback = ::Box(Proc(Button, Nil)).unbox(data)
+        callback.call(@@rbuttons.not_nil!)
       }
 
-      UI.combobox_on_selected(to_unsafe, new_proc, boxed_data)
+      UI.radio_buttons_on_selected(to_unsafe, new_proc, boxed_data)
     end
 
     def selected : Int32
-      return UI.combobox_selected(to_unsafe)
+      return UI.radio_buttons_selected(to_unsafe)
     end
 
     def selected=(index : Int32)
-      UI.combobox_set_selected(to_unsafe, index)
+      UI.radio_buttons_set_selected(to_unsafe, index)
     end
 
     def set_attribute(key : String, value : Any)

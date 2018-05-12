@@ -1,5 +1,6 @@
 require "../bindings.cr"
 require "./control/*"
+require "./widget/*"
 
 module Hedron
   class Checkbox < Widget

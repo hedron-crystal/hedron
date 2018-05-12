@@ -1,7 +1,7 @@
 require "./any.cr"
 
 module Hedron
-  class TypeParser
+  private class TypeParser
     def self.parse(var : String) : Any
       return case var
         when .match(/^".*"$/)

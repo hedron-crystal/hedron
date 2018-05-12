@@ -1,6 +1,7 @@
 require "../bindings.cr"
 require "../struct/color.cr"
 require "./control/*"
+require "./widget/*"
 
 module Hedron
   class ColorButton < Widget

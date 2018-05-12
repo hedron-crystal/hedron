@@ -1,5 +1,5 @@
 module Hedron
-  class Tree
+  private class Tree
     @@counter = 0
 
     property node_class : String
@@ -25,7 +25,7 @@ module Hedron
     end
   end
 
-  class Lexer
+  private class Lexer
     def self.init_controls(control : String) : Array(Tuple(Tree, String))
       parsed_trees = [] of Tuple(Tree, String)
 

@@ -3,6 +3,10 @@ version: 0.1.0
 
 authors:
   - Hanyuan Li <completelyderp@gmail.com>
-  - Chris F Ravenscroft <chris@voilaweb.com>
+
+description: |
+  An easy-to-use, OOP Crystal UI library.
+
+crystal: 0.24.1
 
 license: MIT

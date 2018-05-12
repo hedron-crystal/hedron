@@ -1,4 +1,4 @@
-require "../widget/**"
+require "../ui/**"
 require "./lexer.cr"
 require "./type_parser.cr"
 
@@ -26,7 +26,7 @@ module Hedron
       @classes[class_name.widget_name] = class_name
     end
 
-    private def parse_from_lex(tree : Tree) : Hash(String, Widget)
+    private def parse_from_lex(tree : Tree) : Parsed
       controls = {} of String => Widget
       init_types = {} of String => Any
       types = {} of String => Any
@@ -73,7 +73,7 @@ module Hedron
       return controls
     end
 
-    def parse(filename : String) : Hash(String, Widget)
+    def parse(filename : String) : Parsed
       return parse_from_lex(Lexer.lex(filename))
     end
   end

@@ -1,16 +1,17 @@
 require "../bindings.cr"
 require "./control/*"
+require "./widget/*"
 
 module Hedron
-  class Slider < Widget
+  class Spinbox < Widget
     include ControlMethods
 
     @@box : Void*?
-
-    @this : UI::Slider*
+    
+    @this : UI::Spinbox*
 
     def initialize(bounds : Tuple(Int32, Int32))
-      @this = UI.new_slider(bounds[0], bounds[1])
+      @this = UI.new_spinbox(bounds[0], bounds[1])
     end
 
     def self.init_markup(args : MLArgs)
@@ -21,33 +22,33 @@ module Hedron
       on_change = block
     end
 
-    def on_change=(proc : Proc(Slider, Nil))
+    def on_change=(proc : Proc(Spinbox, Nil))
       boxed_data = ::Box.box(proc)
       @@box = boxed_data
-      @@slider = self
+      @@spinbox = self
 
-      new_proc = ->(slider : UI::Slider*, data : Void*) {
-        callback = ::Box(Proc(Slider, Nil)).unbox(data)
-        callback.call(@@slider.not_nil!)
+      new_proc = ->(spinbox : UI::Spinbox*, data : Void*) {
+        callback = ::Box(Proc(Spinbox, Nil)).unbox(data)
+        callback.call(@@spinbox.not_nil!)
       }
 
-      UI.slider_on_changed(to_unsafe, new_proc, boxed_data)
+      UI.spinbox_on_changed(to_unsafe, new_proc, boxed_data)
     end
 
     def value : Int32
-      return UI.slider_value(to_unsafe)
+      return UI.spinbox_value(to_unsafe)
     end
 
     def value=(val : Int32)
-      UI.slider_set_value(to_unsafe, val)
+      UI.spinbox_set_value(to_unsafe, val)
     end
 
     def set_attribute(key : String, value : Any)
       gen_attributes({"stretchy" => Bool, "value" => Int32})
     end
-
+    
     def to_unsafe
-      return @this
+      @this
     end
   end
 end
