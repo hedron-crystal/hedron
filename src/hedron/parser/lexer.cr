@@ -1,18 +1,23 @@
+require "./type_parser.cr"
+
 module Hedron
   private class Tree
     @@counter = 0
 
+    property index : String?
     property node_class : String
     property id : String
     property values : Hash(String, String)
     property leaves : Array(Tree)
 
     def initialize(@node_class, @id)
+      @index = nil
       @values = {} of String => String
       @leaves = [] of Tree
     end
 
     def initialize(@node_class)
+      @index = nil
       @id = "##{@@counter}"
       @values = {} of String => String
       @leaves = [] of Tree
@@ -90,7 +95,12 @@ module Hedron
         (0...content.size).each do |n|
           if !content[n].includes?("{")
             key, value = content[n].split(":").map(&.strip)
-            tree.values[key] = value
+
+            if key == "^index"
+              tree.index = TypeParser.parse(value).as(String)
+            else
+              tree.values[key] = value
+            end
           else
             index = n
             break

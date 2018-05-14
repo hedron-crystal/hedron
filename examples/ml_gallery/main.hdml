@@ -8,16 +8,27 @@ Window #window {
     @title: "Group";
     margined: true;
     
-    VerticalBox {
-      padded: true;
+    Tab {
       stretchy: true;
+      
+      VerticalBox {
+        ^index: "Page 1";
+        padded: true;
+        stretchy: true;
 
-      Label #label {
-        @text: "You have clicked the button 0 times.";
+        Button #button {
+          @text: "Click me!";
+        }
       }
 
-      Button #button {
-        @text: "Click me!";
+      VerticalBox {
+        ^index: "Page 2";
+        padded: true;
+        stretchy: true;
+
+        Label #label {
+          @text: "You have clicked the button 0 times.";
+        }
       }
     }
   }

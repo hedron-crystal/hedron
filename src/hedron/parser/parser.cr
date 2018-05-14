@@ -4,6 +4,16 @@ require "./type_parser.cr"
 
 module Hedron
   alias Parsed = Hash(String, Widget)
+
+  private class NestedParsed
+    property id : String
+    property widget : Widget
+    property children : Array(NestedParsed)
+
+    def initialize(@id, @widget)
+      @children = [] of NestedParsed
+    end
+  end
   
   CLASS_LIST = [
     Button, Checkbox, ColorButton, Combobox, DatePicker, DateTimePicker,
@@ -26,8 +36,7 @@ module Hedron
       @classes[class_name.widget_name] = class_name
     end
 
-    private def parse_from_lex(tree : Tree) : Parsed
-      controls = {} of String => Widget
+    private def parse_from_lex(tree : Tree) : NestedParsed
       init_types = {} of String => Any
       types = {} of String => Any
 
@@ -39,42 +48,63 @@ module Hedron
         end
       end
 
-      controls[tree.id] = if init_types.size.zero?
-        @classes[tree.node_class].init_markup
+      nested = if init_types.size.zero?
+        NestedParsed.new(tree.id, @classes[tree.node_class].init_markup)
       else
-        @classes[tree.node_class].init_markup(init_types)
+        NestedParsed.new(tree.id, @classes[tree.node_class].init_markup(init_types))
       end
 
       types.each do |key, val|
-        controls[tree.id].set_attribute(key, val)
+        nested.widget.set_attribute(key, val)
       end
 
-      results = {} of String => Widget
-      
+      indices = [] of String?
+
       tree.leaves.each do |leaf|
-        results.merge!(parse_from_lex(leaf))
+        nested.children.push(parse_from_lex(leaf))
+        indices.push(leaf.index)
       end
 
-      case controls[tree.id]
+      case nested.widget
         when SingleContainer
-          if results.select { |key, val| val.parent.nil? }.size != 1
-            raise ParseError.new("SingleContainer class does not have 1 child")
+          raise ParseError.new("SingleContainer can only have one child") if nested.children.size != 1
+          nested.widget.as(SingleContainer).child = nested.children[0].widget
+        when MultipleContainer
+          nested.children.each do |child|
+            nested.widget.as(MultipleContainer).add(child.widget)
+          end
+        when IndexedContainer
+          if indices.any?(&.nil?)
+            raise ParseError.new("All children of IndexedContainer must have ^index property")
           end
 
-          controls[tree.id].as(SingleContainer).child = results[results.keys[0]]
-        when MultipleContainer
-          results.each do |key, val|
-            controls[tree.id].as(MultipleContainer).add(val)
+          indices = indices.map(&.not_nil!)
+
+          (0...indices.size).each do |n|
+            child = nested.children[n].widget
+            index = indices[n]
+
+            nested.widget.as(IndexedContainer)[index] = child
           end
       end
 
-      controls.merge!(results)
+      return nested
+    end
 
-      return controls
+    def flatten(nested : NestedParsed) : Parsed
+      widgets = {} of String => Widget
+      widgets[nested.id] = nested.widget
+
+      nested.children.each do |child|
+        widgets.merge!(flatten(child))
+      end
+
+      return widgets
     end
 
     def parse(filename : String) : Parsed
-      return parse_from_lex(Lexer.lex(filename))
+      nested = parse_from_lex(Lexer.lex(filename))
+      return flatten(nested)
     end
   end
 end
