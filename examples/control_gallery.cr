@@ -1,9 +1,9 @@
 require "../src/hedron.cr"
 
-class ControlGallery
+class ControlGallery < Hedron::Application
   def on_closing(this)
     this.destroy
-    @@app.not_nil!.stop
+    stop
     return false
   end
 
@@ -14,7 +14,7 @@ class ControlGallery
 
   def open_clicked(this)
     mainwin = @@mainwin.not_nil!
-    filename = @@app.not_nil!.open_file(mainwin)
+    filename = open_file(mainwin)
 
     if filename.nil?
       mainwin.error(title: "No file selected", description: "Don't be alarmed!")
@@ -25,7 +25,7 @@ class ControlGallery
 
   def save_clicked(this)
     mainwin = @@mainwin.not_nil!
-    filename = @@app.not_nil!.save_file(mainwin)
+    filename = save_file(mainwin)
 
     if filename.nil?
       mainwin.error(title: "No file selected", description: "Don't be alarmed!")
@@ -47,33 +47,28 @@ class ControlGallery
   end
 
   def initialize
-    @@app = Hedron::Application.new
-    app = @@app.not_nil!
+    super
 
     file_menu = Hedron::Menu.new("File")
-    open = Hedron::MenuItem.new("Open", on_click: ->open_clicked(Hedron::MenuItem))
-    save = Hedron::MenuItem.new("Save", on_click: ->save_clicked(Hedron::MenuItem))
-
-    file_menu.add_all(open, save)
+    open = Hedron::MenuItem.new(file_menu, "Open")
+    save = Hedron::MenuItem.new(file_menu, "Save")
+    
     file_menu.add_quit
-    app.on_stop = ->should_quit
+    on_stop = ->should_quit
 
     edit_menu = Hedron::Menu.new("Edit")
-    checkable = Hedron::MenuCheckItem.new("Checkable item")
+    checkable = Hedron::MenuCheckItem.new(edit_menu, "Checkable item")
 
-    edit_menu.add(checkable)
     edit_menu.add_separator
 
-    disabled = Hedron::MenuItem.new("Disabled Item")
+    disabled = Hedron::MenuItem.new(edit_menu, "Disabled Item")
     disabled.disable
 
-    edit_menu.add(disabled)
     edit_menu.add_preferences
 
     help_menu = Hedron::Menu.new("Help")
-    help = Hedron::MenuItem.new("Help")
+    help = Hedron::MenuItem.new(help_menu, "Help")
 
-    help_menu.add(help)
     help_menu.add_about
 
     @@mainwin = Hedron::Window.new("Hedron Control Gallery", {640, 480}, menubar: true)
@@ -173,10 +168,9 @@ class ControlGallery
     inner2.add(tab)
 
     mainwin.show
-
-    app.start
-    app.close
   end
 end
 
-ControlGallery.new
+gallery = ControlGallery.new
+gallery.start
+gallery.close

@@ -1,4 +1,4 @@
-require "../../parser/any.cr"
+require "../parser/any.cr"
 require "../control/control.cr"
 
 module Hedron
@@ -106,10 +106,20 @@ module Hedron
       raise ParseError.new("Widget does not have any attributes")
     end
 
+    # Checks if another widget is the parent of the widget.
+    # ```crystal
+    # foo = Hedron::Box.new
+    # button = Hedron::Button.new("Button")
+    # foo.add(button)
+    # button.parent?(foo) # => true
+    # ```
     def parent?(widget : Widget) : Bool
       return @parent == widget
     end
 
+    # An abstract method, must be implemented by all classes that
+    # extend Widget. Must return a control (see `control.cr` for more
+    # information).
     abstract def display : Control
   end
 end

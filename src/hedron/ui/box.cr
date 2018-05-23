@@ -1,6 +1,6 @@
 require "../bindings.cr"
-require "./control/*"
-require "./widget/*"
+require "../control/*"
+require "../widget/*"
 
 module Hedron
   abstract class Box < MultipleContainer
@@ -14,13 +14,17 @@ module Hedron
       return int == 1 ? true : false
     end
 
-    def add(control : Control)
-      control.parent = self
-      UI.box_append(to_unsafe, ui_control(control.to_unsafe), to_int(control.stretchy?))
+    def add(child : Widget)
+      child.parent = self
+      control = child.display
+
+      if control.is_a?(ControlMethods)
+        UI.box_append(to_unsafe, ui_control(control.to_unsafe), to_int(control.stretchy?))
+      end
     end
 
-    def add_all(*controls : Control)
-      controls.each { |control| add(control) }
+    def add_all(*children : Widget)
+      children.each { |child| add(child) }
     end
 
     def delete(index : Int32)

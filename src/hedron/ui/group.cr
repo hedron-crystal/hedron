@@ -1,6 +1,6 @@
 require "../bindings.cr"
-require "./control/*"
-require "./widget/*"
+require "../control/*"
+require "../widget/*"
 
 module Hedron
   class Group < SingleContainer
@@ -40,9 +40,9 @@ module Hedron
       UI.group_set_title(to_unsafe, group_title)
     end
 
-    def child=(child : Control)
+    def child=(child : Widget)
       child.parent = self
-      UI.group_set_child(to_unsafe, ui_control(child.to_unsafe))
+      UI.group_set_child(to_unsafe, ui_control(child.display.to_unsafe))
     end
 
     def set_attribute(key : String, value : Any)

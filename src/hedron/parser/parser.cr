@@ -1,20 +1,10 @@
-require "../ui/**"
+require "../ui/*"
+require "../widget/*"
 require "./lexer.cr"
+require "./parse_classes.cr"
 require "./type_parser.cr"
 
 module Hedron
-  alias Parsed = Hash(String, Widget)
-
-  private class NestedParsed
-    property id : String
-    property widget : Widget
-    property children : Array(NestedParsed)
-
-    def initialize(@id, @widget)
-      @children = [] of NestedParsed
-    end
-  end
-  
   CLASS_LIST = [
     Button, Checkbox, ColorButton, Combobox, DatePicker, DateTimePicker,
     EditableCombobox, Entry, FontButton, Group, HorizontalBox, HorizontalSeparator,
@@ -92,11 +82,11 @@ module Hedron
     end
 
     def flatten(nested : NestedParsed) : Parsed
-      widgets = {} of String => Widget
-      widgets[nested.id] = nested.widget
+      widgets = Parsed.new
+      widgets.items[nested.id] = nested.widget
 
       nested.children.each do |child|
-        widgets.merge!(flatten(child))
+        widgets.items.merge!(flatten(child).items)
       end
 
       return widgets

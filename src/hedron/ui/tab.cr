@@ -1,6 +1,6 @@
 require "../bindings.cr"
-require "./control/*"
-require "./widget/*"
+require "../control/*"
+require "../widget/*"
 
 module Hedron
   class Tab < IndexedContainer
@@ -24,8 +24,8 @@ module Hedron
       return self.new
     end
 
-    def []=(name : String, control : Control)
-      UI.tab_append(to_unsafe, name, ui_control(control.to_unsafe))
+    def []=(name : String, child : Widget)
+      UI.tab_append(to_unsafe, name, ui_control(child.display.to_unsafe))
     end
 
     def delete(index : Int32)

@@ -1,4 +1,3 @@
-require "../control/control.cr"
 require "./widget.cr"
 
 module Hedron
@@ -11,7 +10,7 @@ module Hedron
       raise ParseError.new("Widget initialization with args has not been implemented")
     end
 
-    abstract def child=(child : Control)
+    abstract def child=(child : Widget)
   end
 
   abstract class MultipleContainer < Widget
@@ -23,7 +22,7 @@ module Hedron
       raise ParseError.new("Widget initialization with args has not been implemented")
     end
 
-    abstract def add(child : Control)
+    abstract def add(child : Widget)
   end
 
   abstract class IndexedContainer < Widget
@@ -35,6 +34,6 @@ module Hedron
       raise ParseError.new("Widget initialization with args has not been implemented")
     end
 
-    abstract def []=(index : String, child : Control)
+    abstract def []=(index : String, child : Widget)
   end
 end

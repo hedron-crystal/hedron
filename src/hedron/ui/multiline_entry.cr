@@ -1,6 +1,6 @@
 require "../bindings.cr"
-require "./control/*"
-require "./widget/*"
+require "../control/*"
+require "../widget/*"
 
 module Hedron
   class MultilineEntry < Widget
