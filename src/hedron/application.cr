@@ -1,4 +1,4 @@
-require "../bindings.cr"
+require "./bindings.cr"
 
 module Hedron
   class Application
