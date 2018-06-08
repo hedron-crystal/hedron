@@ -1,7 +1,7 @@
 require "../../src/hedron.cr"
 
 class MLGallery
-  @@main : Hedron::Parsed?
+  @@main : Hedron::Render?
   @@window : Hedron::Window?
 
   @counter = 0
@@ -22,8 +22,7 @@ class MLGallery
     app = @@app.not_nil!
     app.on_stop = ->should_quit
 
-    parser = Hedron::Parser.new
-    @@main = parser.parse("./examples/ml_gallery/main.hdml")
+    @@main = Hedron::HDML.render_file("./examples/ml_gallery/main.hdml")
     main = @@main.not_nil!
 
     @@window = main["window"].as(Hedron::Window)

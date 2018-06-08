@@ -18,7 +18,7 @@ module Hedron
 
     def initialize(@node_class)
       @index = nil
-      @id = "##{@@counter}"
+      @id = "!#{@@counter}"
       @values = {} of String => String
       @leaves = [] of Tree
 
@@ -45,14 +45,22 @@ module Hedron
           control_type = temp.strip
         end
 
-        id = /^#[a-z_]+\s*(?=\{)/m.match(control)
+        id = /^#[a-z_]+\s*/m.match(control)
 
-        if id.nil?
-          tree = Tree.new(control_type)
+        tree = if id.nil?
+          Tree.new(control_type)
         else
           temp = id.not_nil![0]
           control = control[temp.size..-1]
-          tree = Tree.new(control_type, temp[1..-1].strip)
+          Tree.new(control_type, temp.strip[1..-1])
+        end
+
+        index = /^\^".+?"\s*/m.match(control)
+
+        unless index.nil?
+          temp = index[0]
+          control = control[temp.size..-1]
+          tree.index = temp.strip[2..-2]
         end
 
         end_index = 0
@@ -95,12 +103,7 @@ module Hedron
         (0...content.size).each do |n|
           if !content[n].includes?("{")
             key, value = content[n].split(":").map(&.strip)
-
-            if key == "^index"
-              tree.index = TypeParser.parse(value).as(String)
-            else
-              tree.values[key] = value
-            end
+            tree.values[key] = value
           else
             index = n
             break

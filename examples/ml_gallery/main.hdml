@@ -11,8 +11,7 @@ Window #window {
     Tab {
       stretchy: true;
       
-      VerticalBox {
-        ^index: "Page 1";
+      VerticalBox ^"Page 1" {
         padded: true;
         stretchy: true;
 
@@ -21,8 +20,7 @@ Window #window {
         }
       }
 
-      VerticalBox {
-        ^index: "Page 2";
+      VerticalBox ^"Page 2" {
         padded: true;
         stretchy: true;
 

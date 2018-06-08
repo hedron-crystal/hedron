@@ -1,6 +1,6 @@
 require "./hedron/exception/*"
 require "./hedron/menu/*"
-require "./hedron/parser/parser.cr"
+require "./hedron/parser/hdml.cr"
 require "./hedron/struct/*"
 require "./hedron/ui/*"
 require "./hedron/widget/*"
