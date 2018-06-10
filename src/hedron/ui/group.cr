@@ -42,7 +42,6 @@ module Hedron
 
     def child=(child : Widget)
       child.parent = self
-      puts typeof(child.display.as(Control))
       UI.group_set_child(to_unsafe, ui_control(child.display.as(Control).to_unsafe))
     end
 
