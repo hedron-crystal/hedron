@@ -4,7 +4,7 @@ require "../widget/*"
 
 module Hedron
   class Tab < IndexedContainer
-    include ControlMethods
+    include Control
 
     @this : UI::Tab*
 

@@ -8,6 +8,8 @@ module Hedron
   # Hedron are derived from.
   abstract class Widget
     property parent : Widget?
+    property id : String?
+    property index : String?
 
     # Markup language integration functions
 

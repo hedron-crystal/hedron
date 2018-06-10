@@ -4,7 +4,7 @@ require "../widget/*"
 
 module Hedron
   abstract class Separator < Widget
-    include ControlMethods
+    include Control
   end
 
   class HorizontalSeparator < Separator

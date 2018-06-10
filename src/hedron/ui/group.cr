@@ -4,7 +4,7 @@ require "../widget/*"
 
 module Hedron
   class Group < SingleContainer
-    include ControlMethods
+    include Control
 
     @this : UI::Group*
 

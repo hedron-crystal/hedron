@@ -5,7 +5,7 @@ require "../widget/*"
 
 module Hedron
   class ColorButton < Widget
-    include ControlMethods
+    include Control
 
     @this : UI::ColorButton*
 

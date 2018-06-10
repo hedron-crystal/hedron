@@ -4,7 +4,7 @@ require "../widget/*"
 
 module Hedron
   class Slider < Widget
-    include ControlMethods
+    include Control
 
     @@box : Void*?
 

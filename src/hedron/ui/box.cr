@@ -4,7 +4,7 @@ require "../widget/*"
 
 module Hedron
   abstract class Box < MultipleContainer
-    include ControlMethods
+    include Control
     
     private def to_int(bool : Bool) : Int32
       return bool ? 1 : 0
@@ -18,7 +18,7 @@ module Hedron
       child.parent = self
       control = child.display
 
-      if control.is_a?(ControlMethods)
+      if control.is_a?(Control)
         UI.box_append(to_unsafe, ui_control(control.to_unsafe), to_int(control.stretchy?))
       end
     end

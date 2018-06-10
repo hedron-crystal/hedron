@@ -4,7 +4,7 @@ require "../widget/*"
 
 module Hedron
   class DateTimePicker < Widget
-    include ControlMethods
+    include Control
 
     @this : UI::DateTimePicker*
 

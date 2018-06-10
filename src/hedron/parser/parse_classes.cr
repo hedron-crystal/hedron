@@ -26,15 +26,15 @@ module Hedron
   end
 
   class Render
-    @nest : Parsed
+    @parsed : Parsed
 
-    def initialize(@nest); end
+    def initialize(@parsed); end
 
     def [](index : String) : Widget
-      raise ArgumentError.new("No such widget with ID #{index}") unless @nest.aliases.has_key?(index)
+      raise ArgumentError.new("No such widget with ID #{index}") unless @parsed.aliases.has_key?(index)
       
-      path = @nest.aliases[index]
-      nested = @nest
+      path = @parsed.aliases[index]
+      nested = @parsed
 
       path.each do |key|
         nested = nested.children.find { |child| child.id == key }.not_nil!

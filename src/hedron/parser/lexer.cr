@@ -1,35 +1,6 @@
 require "./type_parser.cr"
 
 module Hedron
-  private class Tree
-    @@counter = 0
-
-    property index : String?
-    property node_class : String
-    property id : String
-    property values : Hash(String, String)
-    property leaves : Array(Tree)
-
-    def initialize(@node_class, @id)
-      @index = nil
-      @values = {} of String => String
-      @leaves = [] of Tree
-    end
-
-    def initialize(@node_class)
-      @index = nil
-      @id = "!#{@@counter}"
-      @values = {} of String => String
-      @leaves = [] of Tree
-
-      @@counter += 1
-    end
-
-    def [](index : String)
-      return leaves.select { |leaf| leaf.id == index }[0]
-    end
-  end
-
   private class Lexer
     def self.init_controls(control : String) : Array(Tuple(Tree, String))
       parsed_trees = [] of Tuple(Tree, String)
@@ -98,12 +69,13 @@ module Hedron
         tree, content = t
 
         content = content.split(";").map(&.strip)
+        content.clear if content == [""]
         index = nil
         
         (0...content.size).each do |n|
           if !content[n].includes?("{")
             key, value = content[n].split(":").map(&.strip)
-            tree.values[key] = value
+            tree.values[key] = TypeParser.parse(value)
           else
             index = n
             break

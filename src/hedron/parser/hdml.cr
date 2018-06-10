@@ -1,3 +1,4 @@
+require "./lexer.cr"
 require "./parser.cr"
 
 module Hedron
@@ -5,11 +6,15 @@ module Hedron
     @@parser = Parser.new
 
     def self.render_file(filename : String) : Render
-      return @@parser.parse(filename)
+      return Render.new(@@parser.parse_tree(Lexer.lex(filename)))
     end
 
-    def self.render(wclass : Widget.class, id : String?, index : String?, props : Hash(String, Any)?, children : Array(Render))
-      return @@parser.parse_from_render()
+    def self.create_widget(class_name : String, id : String?, index : String?, values : MLArgs?, children : Array(Tree)?) : Tree
+      return @@parser.to_tree(class_name, id, index, values, children)
+    end
+
+    def self.render(tree : Tree) : Render
+      return Render.new(@@parser.parse_from_render(tree))
     end
 
     def self.add_class(wclass : Widget.class)

@@ -4,7 +4,7 @@ require "../widget/*"
 
 module Hedron
   class FontButton < Widget
-    include ControlMethods
+    include Control
 
     @@box : Void*?
 

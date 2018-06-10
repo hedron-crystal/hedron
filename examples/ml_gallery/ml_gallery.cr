@@ -1,4 +1,5 @@
 require "../../src/hedron.cr"
+require "./stats.cr"
 
 class MLGallery
   @@main : Hedron::Render?
@@ -17,11 +18,17 @@ class MLGallery
     return true
   end
 
+  def update_text
+    label = @@main.not_nil!["label"].as(Hedron::Label)
+    label.text = "You have clicked the button #{@counter} times."
+  end
+
   def initialize
     @@app = Hedron::Application.new
     app = @@app.not_nil!
     app.on_stop = ->should_quit
 
+    Hedron::HDML.add_class(Stats)
     @@main = Hedron::HDML.render_file("./examples/ml_gallery/main.hdml")
     main = @@main.not_nil!
 
@@ -31,8 +38,12 @@ class MLGallery
 
     main["button"].as(Hedron::Button).on_click do |button|
       @counter += 1
-      label = @@main.not_nil!["label"].as(Hedron::Label)
-      label.text = "You have clicked the button #{@counter} times."
+      update_text
+    end
+
+    main["reset"].as(Hedron::Button).on_click do |reset|
+      @counter = 0
+      update_text
     end
 
     window.show

@@ -2,6 +2,9 @@ require "./widget.cr"
 
 module Hedron
   abstract class SingleContainer < Widget
+    getter id : String?
+    getter index : String?
+
     def self.init_markup : Widget
       raise ParseError.new("Widget initialization has not been implemented")
     end
@@ -14,6 +17,9 @@ module Hedron
   end
 
   abstract class MultipleContainer < Widget
+    getter id : String?
+    getter index : String?
+
     def self.init_markup : Widget
       raise ParseError.new("Widget initialization has not been implemented")
     end
@@ -26,6 +32,9 @@ module Hedron
   end
 
   abstract class IndexedContainer < Widget
+    getter id : String?
+    getter index : String?
+
     def self.init_markup : Widget
       raise ParseError.new("Widget initialization has not been implemented")
     end

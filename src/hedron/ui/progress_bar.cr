@@ -4,7 +4,7 @@ require "../widget/*"
 
 module Hedron
   class ProgressBar < Widget
-    include ControlMethods
+    include Control
 
     @this : UI::ProgressBar*
 

@@ -4,7 +4,7 @@ require "../widget/*"
 
 module Hedron
   class Checkbox < Widget
-    include ControlMethods
+    include Control
 
     @this : UI::Checkbox*
 

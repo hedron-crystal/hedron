@@ -27,6 +27,10 @@ Window #window {
         Label #label {
           @text: "You have clicked the button 0 times.";
         }
+
+        Button #reset {
+          @text: "Reset stats";
+        }
       }
     }
   }

@@ -4,7 +4,7 @@ require "../widget/*"
 
 module Hedron
   class MultilineEntry < Widget
-    include ControlMethods
+    include Control
 
     @this : UI::MultilineEntry*
 

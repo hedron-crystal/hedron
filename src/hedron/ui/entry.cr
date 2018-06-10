@@ -4,7 +4,7 @@ require "../widget/*"
 
 module Hedron
   class Entry < Widget
-    include ControlMethods
+    include Control
 
     @@box : Void*?
 

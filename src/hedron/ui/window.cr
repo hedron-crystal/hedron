@@ -4,7 +4,7 @@ require "../widget/*"
 
 module Hedron
   class Window < SingleContainer
-    include ControlMethods
+    include Control
 
     @@size_change_box : Void*?
     @@close_box : Void*?
