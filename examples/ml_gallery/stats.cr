@@ -32,6 +32,4 @@ class Stats < Hedron::Widget
       )
     )["tab"].as(Hedron::Tab)
   end
-
-  def to_unsafe; end
 end

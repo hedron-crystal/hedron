@@ -79,7 +79,7 @@ module Hedron
 
     def child=(child : Widget)
       child.parent = self
-      UI.window_set_child(to_unsafe, ui_control(child.display.to_unsafe))
+      UI.window_set_child(to_unsafe, ui_control(child.display.as(Control).to_unsafe))
     end
 
     def title

@@ -42,7 +42,8 @@ module Hedron
 
     def child=(child : Widget)
       child.parent = self
-      UI.group_set_child(to_unsafe, ui_control(child.display.to_unsafe))
+      puts typeof(child.display.as(Control))
+      UI.group_set_child(to_unsafe, ui_control(child.display.as(Control).to_unsafe))
     end
 
     def set_attribute(key : String, value : Any)
