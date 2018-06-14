@@ -70,42 +70,42 @@ module Hedron
       return self.name.split("::")[-1]
     end
 
-    # Helper macro used to cast attributes from HDML,
+    # Helper macro used to cast properties from HDML,
     # takes a Hash(String, Class) as an argument.
-    # Used in the set_attribute() function:
+    # Used in the set_property() function:
     # ```crystal
-    # def set_attribute(key : String, value : Any)
-    #   gen_attributes({
+    # def set_property(key : String, value : Any)
+    #   gen_properties({
     #     "foo" => Int32
     #   })
     # end
     # ```
-    macro gen_attributes(attrs)
+    macro gen_properties(props)
       {% begin %}
         case key
-        {% for key, val in attrs %}
+        {% for key, val in props %}
           when {{key}}
             self.{{key.id}} = value.as({{val}})
         {% end %}
           else
-            raise ParseError.new("No such attribute: #{key}")
+            raise ParseError.new("No such property: #{key}")
         end
       {% end %}
     end
 
-    # Allows for HDML to set an attribute. In your `set_attribute` function,
-    # you must call the `gen_attributes` function, as well as provide a hash
-    # with attribute names and their corresponding classes:
+    # Allows for HDML to set a property. In your `set_property` function,
+    # you must call the `gen_properties` function, as well as provide a hash
+    # with property names and their corresponding classes:
     # ```crystal
-    # def set_attribute(key : String, value : Any)
-    #   gen_attributes({
+    # def set_property(key : String, value : Any)
+    #   gen_properties({
     #     "foo" => Int32
     #   })
     # end
     # ```
     # The list of classes supported can be found in Hedron::Any.
-    def set_attribute(key : String, value : Any)
-      raise ParseError.new("Widget does not have any attributes")
+    def set_property(key : String, value : Any)
+      raise ParseError.new("Widget does not have any properties")
     end
 
     # Checks if another widget is the parent of the widget.

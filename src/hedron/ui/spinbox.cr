@@ -43,8 +43,8 @@ module Hedron
       UI.spinbox_set_value(to_unsafe, val)
     end
 
-    def set_attribute(key : String, value : Any)
-      gen_attributes({"stretchy" => Bool, "value" => Int32})
+    def set_property(key : String, value : Any)
+      gen_properties({"stretchy" => Bool, "value" => Int32})
     end
     
     def to_unsafe

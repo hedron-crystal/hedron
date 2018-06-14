@@ -49,8 +49,8 @@ module Hedron
       UI.editable_combobox_set_text(to_unsafe, ecbox_text)
     end
 
-    def set_attribute(key : String, value : Any)
-      gen_attributes({"stretchy" => Bool, "text" => String})
+    def set_property(key : String, value : Any)
+      gen_properties({"stretchy" => Bool, "text" => String})
     end
 
     def to_unsafe

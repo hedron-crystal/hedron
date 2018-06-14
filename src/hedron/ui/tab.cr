@@ -48,8 +48,8 @@ module Hedron
       UI.tab_set_margined(to_unsafe, to_int(is_margined))
     end
 
-    def set_attribute(key : String, value : Any)
-      gen_attributes({"stretchy" => Bool})
+    def set_property(key : String, value : Any)
+      gen_properties({"stretchy" => Bool})
     end
 
     def to_unsafe

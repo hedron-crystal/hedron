@@ -45,8 +45,8 @@ module Hedron
       UI.group_set_child(to_unsafe, ui_control(child.display.as(Control).to_unsafe))
     end
 
-    def set_attribute(key : String, value : Any)
-      gen_attributes({"stretchy" => Bool, "margined" => Bool, "title" => String})
+    def set_property(key : String, value : Any)
+      gen_properties({"stretchy" => Bool, "margined" => Bool, "title" => String})
     end
 
     def to_unsafe

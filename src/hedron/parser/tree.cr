@@ -1,6 +1,15 @@
 require "./any.cr"
 
 module Hedron
+  private class TemporaryID
+    @@counter = -1
+
+    def self.new_id
+      @@counter += 1
+      return "!#{@@counter}"
+    end
+  end
+
   private class Tree
     @@counter = 0
 
@@ -18,11 +27,9 @@ module Hedron
 
     def initialize(@node_class)
       @index = nil
-      @id = "!#{@@counter}"
+      @id = TemporaryID.new_id
       @values = {} of String => Any
       @leaves = [] of Tree
-
-      @@counter += 1
     end
 
     def [](index : String)

@@ -40,8 +40,8 @@ module Hedron
       UI.checkbox_set_text(to_unsafe, checkbox_text)
     end
 
-    def set_attribute(key : String, value : Any)
-      gen_attributes({"stretchy" => Bool, "checked" => Bool, "text" => String})
+    def set_property(key : String, value : Any)
+      gen_properties({"stretchy" => Bool, "checked" => Bool, "text" => String})
     end
 
     def to_unsafe

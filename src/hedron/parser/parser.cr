@@ -42,6 +42,30 @@ module Hedron
       return {init_props, props}
     end
 
+    private def set_children(parsed : Parsed)
+      case parsed.widget
+        when SingleContainer
+          child = parsed.children[0].widget
+          raise ParseError.new("Child #{child} has index when it's not meant to") unless child.index.nil?
+          raise ParseError.new("SingleContainer can only have one child") if parsed.children.size != 1
+
+          parsed.widget.as(SingleContainer).child = child
+        when MultipleContainer
+          parsed.children.each do |child|
+            widget = child.widget
+            raise ParseError.new("Child #{child} has index when it's not meant to") unless widget.index.nil?
+            parsed.widget.as(MultipleContainer).add(widget)
+          end
+        when IndexedContainer
+          parsed.children.each do |child|
+            widget = child.widget
+            index = widget.index
+            raise ParseError.new("Child #{child} does not have index") if index.nil?
+            parsed.widget.as(IndexedContainer)[index] = widget
+          end
+      end
+    end
+
     def parse_tree(tree : Tree) : Parsed
       init_props, props = separate_props(tree.values)
 
@@ -52,65 +76,47 @@ module Hedron
       end
 
       props.each do |key, val|
-        parsed.widget.set_attribute(key, val)
+        parsed.widget.set_property(key, val)
       end
 
       parsed.widget.id = tree.id
       parsed.widget.index = tree.index
 
-      indices = [] of String?
-
       tree.leaves.each do |leaf|
         parsed.add_child(parse_tree(leaf))
-        indices.push(leaf.index)
       end
 
-      case parsed.widget
-        when SingleContainer
-          child = parsed.children[0].widget
-          raise ParseError.new("Child #{child} has index when it's not meant to") unless indices[0].nil?
-          raise ParseError.new("SingleContainer can only have one child") if parsed.children.size != 1
-
-          parsed.widget.as(SingleContainer).child = parsed.children[0].widget
-        when MultipleContainer
-          (0...parsed.children.size).each do |n|
-            child = parsed.children[n].widget
-            raise ParseError.new("Child #{child} has index when it's not meant to") unless indices[n].nil?
-
-            parsed.widget.as(MultipleContainer).add(child)
-          end
-        when IndexedContainer
-          (0...parsed.children.size).each do |n|
-            child = parsed.children[n].widget
-            index = indices[n]
-            raise ParseError.new("Child #{child} does not have index") if index.nil?
-
-            parsed.widget.as(IndexedContainer)[index] = child
-          end
-      end
-
+      set_children(parsed)
       return parsed
     end
 
-    def to_tree(class_name : String, id : String?, index : String?, values : MLArgs?, children : Array(Tree)?) : Tree
-      tree = id.nil? ? Tree.new(class_name) : Tree.new(class_name, id)
-
+    def parse_from_render(class_name : String, id : String?, index : String?, values : MLArgs?, children : Array(Parsed)?) : Parsed
+      init_props, props = separate_props(values)
+      id = TemporaryID.new_id if id.nil?
       values = {} of String => Any if values.nil?
-      new_values = {} of String => Any
-      values.each { |k, v| new_values[k] = v.as(Any) }
-      values = new_values
-      
-      children = [] of Tree if children.nil?
+      children = [] of Parsed if children.nil?
 
-      tree.values = values
-      tree.index = index
-      tree.leaves = children
+      parsed = if init_props.size.zero?
+        Parsed.new(id, @classes[class_name].init_markup)
+      else
+        Parsed.new(id, @classes[class_name].init_markup(init_props))
+      end
 
-      return tree
-    end
+      props.each do |key, val|
+        parsed.widget.set_property(key, val)
+      end
 
-    def parse_from_render(tree : Tree) : Parsed
-      return parse_tree(tree)
+      parsed.widget.id = id
+      parsed.widget.index = index
+
+      indices = [] of String?
+
+      children.each do |child|
+        parsed.add_child(child)
+      end
+
+      set_children(parsed)
+      return parsed
     end
   end
 end

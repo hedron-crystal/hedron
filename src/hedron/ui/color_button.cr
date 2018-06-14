@@ -25,8 +25,8 @@ module Hedron
       UI.color_button_set_color(to_unsafe, color.red, color.green, color.blue, color.alpha)
     end
 
-    def set_attribute(key : String, value : Any)
-      gen_attributes({"stretchy" => Bool})
+    def set_property(key : String, value : Any)
+      gen_properties({"stretchy" => Bool})
     end
 
     def to_unsafe

@@ -61,8 +61,8 @@ module Hedron
       UI.multiline_entry_set_text(to_unsafe, entry_text)
     end
 
-    def set_attribute(key : String, value : Any)
-      gen_attributes({"stretchy" => Bool, "read_only" => Bool, "text" => String})
+    def set_property(key : String, value : Any)
+      gen_properties({"stretchy" => Bool, "read_only" => Bool, "text" => String})
     end
 
     def to_unsafe

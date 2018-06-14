@@ -132,8 +132,8 @@ module Hedron
       UI.msg_box(to_unsafe, title, description)
     end
 
-    def set_attribute(key : String, value : Any)
-      gen_attributes({
+    def set_property(key : String, value : Any)
+      gen_properties({
         "border" => Bool,
         "margined" => Bool,
         "fullscreen" => Bool,

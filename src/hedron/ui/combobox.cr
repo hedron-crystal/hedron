@@ -49,8 +49,8 @@ module Hedron
       UI.combobox_set_selected(to_unsafe, index)
     end
 
-    def set_attribute(key : String, value : Any)
-      gen_attributes({"stretchy" => Bool, "selected" => Int32})
+    def set_property(key : String, value : Any)
+      gen_properties({"stretchy" => Bool, "selected" => Int32})
     end
 
     def to_unsafe

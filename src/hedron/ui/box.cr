@@ -39,8 +39,8 @@ module Hedron
       UI.box_set_padded(to_unsafe, to_int(is_padded))
     end
 
-    def set_attribute(key : String, value : Any)
-      gen_attributes({"stretchy" => Bool, "padded" => Bool})
+    def set_property(key : String, value : Any)
+      gen_properties({"stretchy" => Bool, "padded" => Bool})
     end
   end
 
