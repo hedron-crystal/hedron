@@ -11,7 +11,8 @@ Hedron is under active development, so check back often!
 ## Installation
 
 1. Follow the instructions for installation laid out in [andlabs/libui](https://github.com/andlabs/libui).
-2. Go to your `shard.yml` file, and enter this in:
+2. Copy the compiled files from step 1 (i.e. files in `build/out`) to `/usr/lib` for OSX and Linux users.
+3. Go to your `shard.yml` file, and enter this in:
 
 ```yaml
 dependencies:
