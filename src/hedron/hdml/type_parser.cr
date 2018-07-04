@@ -1,6 +1,6 @@
-require "./any.cr"
+require "../any.cr"
 
-module Hedron
+module Hedron::HDML
   private class TypeParser
     def self.parse(var : String) : Any
       return case var

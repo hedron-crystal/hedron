@@ -1,5 +1,5 @@
 require "../bindings.cr"
-require "../control/*"
+require "../control.cr"
 require "../widget/*"
 
 module Hedron
@@ -25,7 +25,7 @@ module Hedron
     end
 
     def []=(name : String, child : Widget)
-      UI.tab_append(to_unsafe, name, ui_control(child.display.as(Control).to_unsafe))
+      UI.tab_append(to_unsafe, name, ui_control(child.control.as(Control).to_unsafe))
     end
 
     def delete(index : Int32)

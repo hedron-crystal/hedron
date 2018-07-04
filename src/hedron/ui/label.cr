@@ -1,5 +1,5 @@
 require "../bindings.cr"
-require "../control/*"
+require "../control.cr"
 require "../widget/*"
 
 module Hedron
@@ -17,7 +17,7 @@ module Hedron
     end
 
     def text : String
-      return UI.label_text(to_unsafe)
+      return String.new(UI.label_text(to_unsafe))
     end
 
     def text=(label_text : String)

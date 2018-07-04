@@ -1,6 +1,6 @@
-require "./any.cr"
+require "../any.cr"
 
-module Hedron
+module Hedron::HDML
   private class TemporaryID
     @@counter = -1
 
@@ -13,9 +13,9 @@ module Hedron
   private class Tree
     @@counter = 0
 
-    property index : String?
     property node_class : String
     property id : String
+    property index : String?
     property values : Hash(String, Any)
     property leaves : Array(Tree)
 
@@ -26,8 +26,8 @@ module Hedron
     end
 
     def initialize(@node_class)
-      @index = nil
       @id = TemporaryID.new_id
+      @index = nil
       @values = {} of String => Any
       @leaves = [] of Tree
     end

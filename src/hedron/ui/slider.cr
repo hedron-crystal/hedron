@@ -1,5 +1,5 @@
 require "../bindings.cr"
-require "../control/*"
+require "../control.cr"
 require "../widget/*"
 
 module Hedron

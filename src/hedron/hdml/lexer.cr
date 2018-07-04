@@ -1,6 +1,6 @@
 require "./type_parser.cr"
 
-module Hedron
+module Hedron::HDML
   private class Lexer
     def self.init_controls(control : String) : Array(Tuple(Tree, String))
       parsed_trees = [] of Tuple(Tree, String)
@@ -16,7 +16,7 @@ module Hedron
           control_type = temp.strip
         end
 
-        id = /^#[a-z_]+\s*/m.match(control)
+        id = /^#[a-z0-9\-]+\s*/m.match(control)
 
         tree = if id.nil?
           Tree.new(control_type)
@@ -70,11 +70,12 @@ module Hedron
 
         content = content.split(";").map(&.strip)
         content.clear if content == [""]
+        content = content[0..-2] if content.size > 0 && content[-1] == ""
         index = nil
         
         (0...content.size).each do |n|
           if !content[n].includes?("{")
-            key, value = content[n].split(":").map(&.strip)
+            key, _, value = content[n].partition(':').map(&.strip)
             tree.values[key] = TypeParser.parse(value)
           else
             index = n
@@ -93,8 +94,8 @@ module Hedron
       return lexed_trees
     end
 
-    def self.lex_toplevel(control : String) : Tree
-      trees = self.lex_controls(control)
+    def self.lex_contents(contents : String) : Tree
+      trees = self.lex_controls(contents.strip)
 
       raise LexError.new("Could not find top-level widget") if trees.size.zero?
       raise LexError.new("Only 1 widget allowed in top-level") if trees.size > 1
@@ -103,7 +104,7 @@ module Hedron
 
     def self.lex(filename : String) : Tree
       contents = File.read(filename)
-      tree = self.lex_toplevel(contents.strip)
+      tree = lex_contents(contents)
 
       return tree
     end

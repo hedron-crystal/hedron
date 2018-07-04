@@ -1,5 +1,5 @@
 require "../bindings.cr"
-require "../control/*"
+require "../control.cr"
 require "../widget/*"
 
 module Hedron
@@ -79,7 +79,7 @@ module Hedron
 
     def child=(child : Widget)
       child.parent = self
-      UI.window_set_child(to_unsafe, ui_control(child.display.as(Control).to_unsafe))
+      UI.window_set_child(to_unsafe, ui_control(child.control.as(Control).to_unsafe))
     end
 
     def title

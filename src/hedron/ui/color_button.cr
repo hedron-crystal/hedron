@@ -1,6 +1,6 @@
 require "../bindings.cr"
 require "../struct/color.cr"
-require "../control/*"
+require "../control.cr"
 require "../widget/*"
 
 module Hedron

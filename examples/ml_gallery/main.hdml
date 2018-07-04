@@ -20,18 +20,7 @@ Window #window {
         }
       }
 
-      VerticalBox ^"Page 2" {
-        padded: true;
-        stretchy: true;
-
-        Label #label {
-          @text: "You have clicked the button 0 times.";
-        }
-
-        Button #reset {
-          @text: "Reset stats";
-        }
-      }
+      ButtonTab #btab ^"Page 2" { }
     }
   }
 }

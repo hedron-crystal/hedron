@@ -3,7 +3,7 @@ require "../src/hedron.cr"
 class ControlGallery < Hedron::Application
   def on_closing(this)
     this.destroy
-    stop
+    self.stop
     return false
   end
 
@@ -54,7 +54,7 @@ class ControlGallery < Hedron::Application
     save = Hedron::MenuItem.new(file_menu, "Save")
     
     file_menu.add_quit
-    on_stop = ->should_quit
+    self.on_stop = ->should_quit
 
     edit_menu = Hedron::Menu.new("Edit")
     checkable = Hedron::MenuCheckItem.new(edit_menu, "Checkable item")

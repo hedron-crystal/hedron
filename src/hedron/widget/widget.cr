@@ -1,5 +1,6 @@
-require "../parser/any.cr"
-require "../control/control.cr"
+require "../any.cr"
+require "../control.cr"
+require "../render.cr"
 
 module Hedron
   alias MLArgs = Hash(String, Any)
@@ -10,6 +11,8 @@ module Hedron
     property parent : Widget?
     property id : String?
     property index : String?
+
+    property display : Render?
 
     # Markup language integration functions
 
@@ -119,9 +122,8 @@ module Hedron
       return @parent == widget
     end
 
-    # An abstract method, must be implemented by all classes that
-    # extend Widget. Must return a control (see `control.cr` for more
-    # information).
-    abstract def display : Control
+    def control : Control
+      return self.is_a?(Control) ? self : @display.not_nil!.widget.as(Control)
+    end
   end
 end

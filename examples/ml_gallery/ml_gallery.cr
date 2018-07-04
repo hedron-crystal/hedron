@@ -1,15 +1,13 @@
 require "../../src/hedron.cr"
-require "./stats.cr"
+require "./button_tab.cr"
 
-class MLGallery
+class MLGallery < Hedron::Application
   @@main : Hedron::Render?
   @@window : Hedron::Window?
 
-  @counter = 0
-
   def on_closing(this)
     this.destroy
-    @@app.not_nil!.stop
+    self.stop
     return false
   end
 
@@ -18,39 +16,27 @@ class MLGallery
     return true
   end
 
-  def update_text
-    label = @@main.not_nil!["label"].as(Hedron::Label)
-    label.text = "You have clicked the button #{@counter} times."
-  end
-
   def initialize
-    @@app = Hedron::Application.new
-    app = @@app.not_nil!
-    app.on_stop = ->should_quit
+    super
+    self.on_stop = ->should_quit
 
-    Hedron::HDML.add_class(Stats)
+    Hedron::Classes.add_class(ButtonTab)
     @@main = Hedron::HDML.render_file("./examples/ml_gallery/main.hdml")
     main = @@main.not_nil!
 
-    @@window = main["window"].as(Hedron::Window)
+    @@window = main["window"].widget.as(Hedron::Window)
     window = @@window.not_nil!
     window.on_close = ->on_closing(Hedron::Window)
 
-    main["button"].as(Hedron::Button).on_click do |button|
-      @counter += 1
-      update_text
-    end
-
-    main["reset"].as(Hedron::Button).on_click do |reset|
-      @counter = 0
-      update_text
+    main["button"].widget.as(Hedron::Button).on_click do |button|
+      stats = @@main.not_nil!["btab"].widget.as(ButtonTab)
+      stats.new_button
     end
 
     window.show
-
-    app.start
-    app.close
   end
 end
 
-MLGallery.new
+gallery = MLGallery.new
+gallery.start
+gallery.close

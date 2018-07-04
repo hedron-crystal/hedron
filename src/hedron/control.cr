@@ -50,10 +50,6 @@ module Hedron
       return to_bool(UI.control_visible(ui_control(to_unsafe)))
     end
 
-    def display : Control
-      return self
-    end
-
     def to_unsafe; end
   end
 end

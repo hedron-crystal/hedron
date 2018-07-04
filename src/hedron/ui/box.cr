@@ -1,5 +1,5 @@
 require "../bindings.cr"
-require "../control/*"
+require "../control.cr"
 require "../widget/*"
 
 module Hedron
@@ -16,11 +16,7 @@ module Hedron
 
     def add(child : Widget)
       child.parent = self
-      control = child.display
-
-      if control.is_a?(Control)
-        UI.box_append(to_unsafe, ui_control(control.to_unsafe), to_int(control.stretchy?))
-      end
+      UI.box_append(to_unsafe, ui_control(child.control.to_unsafe), to_int(child.control.stretchy?))
     end
 
     def add_all(*children : Widget)
