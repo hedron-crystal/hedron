@@ -31,11 +31,10 @@ module Hedron
     def on_select=(proc : Proc(RadioButtons, Nil))
       boxed_data = ::Box.box(proc)
       @@box = boxed_data
-      @@rbuttons = self
 
       new_proc = ->(rbuttons : RadioButtons, data : Void*) {
         callback = ::Box(Proc(Button, Nil)).unbox(data)
-        callback.call(@@rbuttons.not_nil!)
+        callback.call(RadioButtons.new(rbuttons))
       }
 
       UI.radio_buttons_on_selected(to_unsafe, new_proc, boxed_data)

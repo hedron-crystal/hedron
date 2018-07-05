@@ -22,6 +22,8 @@ module Hedron
       @this = UI.new_entry
     end
 
+    def initialize(@this); end
+
     def self.init_markup
       return self.new
     end
@@ -33,11 +35,10 @@ module Hedron
     def on_change=(proc : Proc(Entry, Nil))
       boxed_data = ::Box.box(proc)
       @@box = boxed_data
-      @@entry = self
 
       new_proc = ->(entry : UI::Entry*, data : Void*) {
         callback = ::Box(Proc(Entry, Nil)).unbox(data)
-        callback.call(@@entry.not_nil!)
+        callback.call(Entry.new(entry))
       }
 
       UI.entry_on_changed(to_unsafe, new_proc, boxed_data)

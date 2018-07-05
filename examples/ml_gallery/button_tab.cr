@@ -29,7 +29,7 @@ class ButtonTab < Hedron::Widget
     button = button.widget.as(Hedron::Button)
 
     button.on_click do |this|
-      this.text = "Button 0"
+      puts this.text
     end
 
     @@buttons.push(button)

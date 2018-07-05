@@ -14,6 +14,8 @@ module Hedron
       @this = UI.new_spinbox(bounds[0], bounds[1])
     end
 
+    def initialize(@this); end
+
     def self.init_markup(args : MLArgs)
       return self.new({args["upper"].as(Int32), args["lower"].as(Int32)})
     end
@@ -25,11 +27,10 @@ module Hedron
     def on_change=(proc : Proc(Spinbox, Nil))
       boxed_data = ::Box.box(proc)
       @@box = boxed_data
-      @@spinbox = self
 
       new_proc = ->(spinbox : UI::Spinbox*, data : Void*) {
         callback = ::Box(Proc(Spinbox, Nil)).unbox(data)
-        callback.call(@@spinbox.not_nil!)
+        callback.call(Spinbox.new(spinbox))
       }
 
       UI.spinbox_on_changed(to_unsafe, new_proc, boxed_data)

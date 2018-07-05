@@ -14,6 +14,8 @@ module Hedron
       @this = UI.new_combobox
     end
 
+    def initialize(@this); end
+
     def self.init_markup
       return self.new
     end
@@ -31,11 +33,10 @@ module Hedron
     def on_select=(proc : Proc(Combobox, Nil))
       boxed_data = ::Box.box(proc)
       @@box = boxed_data
-      @@combobox = self
 
       new_proc = ->(combobox : UI::Combobox*, data : Void*) {
         callback = ::Box(Proc(Combobox, Nil)).unbox(data)
-        callback.call(@@combobox.not_nil!)
+        callback.call(Combobox.new(combobox))
       }
 
       UI.combobox_on_selected(to_unsafe, new_proc, boxed_data)

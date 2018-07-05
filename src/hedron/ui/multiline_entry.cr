@@ -20,6 +20,8 @@ module Hedron
       @this = UI.new_multiline_entry
     end
 
+    def initialize(@this); end
+
     def self.init_markup
       return self.new
     end
@@ -35,11 +37,10 @@ module Hedron
     def on_click=(proc : Proc(MultilineEntry, Nil))
       boxed_data = ::Box.box(proc)
       @@box = boxed_data
-      @@ml_entry = self
 
       new_proc = ->(ml_entry : UI::MultilineEntry*, data : Void*) {
         callback = ::Box(Proc(MultilineEntry, Nil)).unbox(data)
-        callback.call(@@ml_entry.not_nil!)
+        callback.call(MultilineEntry.new(ml_entry))
       }
 
       UI.multiline_entry_on_changed(to_unsafe, new_proc, boxed_data)

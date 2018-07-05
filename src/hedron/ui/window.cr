@@ -27,6 +27,8 @@ module Hedron
       @this = UI.new_window(title, dimensions[0], dimensions[1], to_int(menubar))
     end
 
+    def initialize(@this); end
+
     # Takes 4 arguments:
     # ```
     # Window {
@@ -97,11 +99,10 @@ module Hedron
     def on_size_change=(proc : Proc(Window, Nil))
       boxed_data = ::Box.box(proc)
       @@size_change_box = boxed_data
-      @@window = self
 
-      new_proc = ->(w : UI::Window*, data : Void*) {
+      new_proc = ->(window : UI::Window*, data : Void*) {
         callback = ::Box(Proc(Window, Nil)).unbox(data)
-        callback.call(@@window.not_nil!)
+        callback.call(Window.new(window))
       }
 
       UI.window_on_content_size_changed(to_unsafe, new_proc, boxed_data)
@@ -114,11 +115,10 @@ module Hedron
     def on_close=(proc : Proc(Window, Bool))
       boxed_data = ::Box.box(proc)
       @@close_box = boxed_data
-      @@window = self
 
-      new_proc = ->(w : UI::Window*, data : Void*) {
+      new_proc = ->(window : UI::Window*, data : Void*) {
         callback = ::Box(Proc(Window, Bool)).unbox(data)
-        return callback.call(@@window.not_nil!) ? 1 : 0
+        return callback.call(Window.new(window)) ? 1 : 0
       }
 
       UI.window_on_closing(to_unsafe, new_proc, boxed_data)

@@ -14,6 +14,8 @@ module Hedron
       @this = UI.new_button(text)
     end
 
+    def initialize(@this); end
+
     def self.init_markup(args : MLArgs)
       return self.new(args["text"].as(String))
     end
@@ -25,11 +27,10 @@ module Hedron
     def on_click=(proc : Proc(Button, Nil))
       boxed_data = ::Box.box(proc)
       @@box = boxed_data
-      @@button = self
 
       new_proc = ->(button : UI::Button*, data : Void*) {
         callback = ::Box(Proc(Button, Nil)).unbox(data)
-        callback.call(@@button.not_nil!)
+        callback.call(Button.new(button))
       }
 
       UI.button_on_clicked(to_unsafe, new_proc, boxed_data)

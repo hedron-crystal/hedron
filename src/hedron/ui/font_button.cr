@@ -14,6 +14,8 @@ module Hedron
       @this = UI.new_font_button
     end
 
+    def initialize(@this); end
+
     def self.init_markup
       return self.new
     end
@@ -30,11 +32,10 @@ module Hedron
     def on_change=(proc : Proc(FontButton, Void))
       boxed_data = ::Box.box(proc)
       @@box = boxed_data
-      @@font_button = self
 
       new_proc = ->(font_button : UI::FontButton*, data : Void*) {
         callback = ::Box(Proc(FontButton, Nil)).unbox(data)
-        callback.call(@@font_button.not_nil!)
+        callback.call(FontButton.new(font_button))
       }
 
       UI.font_button_on_changed(to_unsafe, new_proc, boxed_data)

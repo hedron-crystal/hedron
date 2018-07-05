@@ -14,6 +14,8 @@ module Hedron
       @this = UI.new_slider(bounds[0], bounds[1])
     end
 
+    def initialize(@this); end
+
     def self.init_markup(args : MLArgs)
       return self.new({args["upper"].as(Int32), args["lower"].as(Int32)})
     end
@@ -25,11 +27,10 @@ module Hedron
     def on_change=(proc : Proc(Slider, Nil))
       boxed_data = ::Box.box(proc)
       @@box = boxed_data
-      @@slider = self
 
       new_proc = ->(slider : UI::Slider*, data : Void*) {
         callback = ::Box(Proc(Slider, Nil)).unbox(data)
-        callback.call(@@slider.not_nil!)
+        callback.call(Slider.new(slider))
       }
 
       UI.slider_on_changed(to_unsafe, new_proc, boxed_data)
