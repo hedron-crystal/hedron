@@ -1,6 +1,12 @@
 require "../src/hedron.cr"
 
 class ControlGallery < Hedron::Application
+  @mainwin : Hedron::Window?
+
+  @progressbar : Hedron::ProgressBar?
+  @slider      : Hedron::Slider?
+  @spinbox     : Hedron::Spinbox?
+
   def on_closing(this)
     this.destroy
     self.stop
@@ -8,12 +14,12 @@ class ControlGallery < Hedron::Application
   end
 
   def should_quit
-    @@mainwin.not_nil!.destroy
+    @mainwin.not_nil!.destroy
     return true
   end
 
   def open_clicked(this)
-    mainwin = @@mainwin.not_nil!
+    mainwin = @mainwin.not_nil!
     filename = open_file(mainwin)
 
     if filename.nil?
@@ -24,7 +30,7 @@ class ControlGallery < Hedron::Application
   end
 
   def save_clicked(this)
-    mainwin = @@mainwin.not_nil!
+    mainwin = @mainwin.not_nil!
     filename = save_file(mainwin)
 
     if filename.nil?
@@ -36,14 +42,14 @@ class ControlGallery < Hedron::Application
 
   def on_spinbox_changed(this)
     value = this.value
-    @@slider.not_nil!.value = value
-    @@progressbar.not_nil!.value = value
+    @slider.not_nil!.value = value
+    @progressbar.not_nil!.value = value
   end
 
   def on_slider_changed(this)
     value = this.value
-    @@spinbox.not_nil!.value = value
-    @@progressbar.not_nil!.value = value
+    @spinbox.not_nil!.value = value
+    @progressbar.not_nil!.value = value
   end
 
   def initialize
@@ -71,8 +77,8 @@ class ControlGallery < Hedron::Application
 
     help_menu.add_about
 
-    @@mainwin = Hedron::Window.new("Hedron Control Gallery", {640, 480}, menubar: true)
-    mainwin = @@mainwin.not_nil!
+    @mainwin = Hedron::Window.new("Hedron Control Gallery", {640, 480}, menubar: true)
+    mainwin = @mainwin.not_nil!
     mainwin.margined = true
     mainwin.on_close = ->on_closing(Hedron::Window)
 
@@ -125,18 +131,18 @@ class ControlGallery < Hedron::Application
     inner.padded = true
     group.child = inner
 
-    @@spinbox = Hedron::Spinbox.new({0, 100})
-    spinbox = @@spinbox.not_nil!
+    @spinbox = Hedron::Spinbox.new({0, 100})
+    spinbox = @spinbox.not_nil!
     spinbox.on_change = ->on_spinbox_changed(Hedron::Spinbox)
     inner.add(spinbox)
 
-    @@slider = Hedron::Slider.new({0, 100})
-    slider = @@slider.not_nil!
+    @slider = Hedron::Slider.new({0, 100})
+    slider = @slider.not_nil!
     slider.on_change = ->on_slider_changed(Hedron::Slider)
     inner.add(slider)
 
-    @@progressbar = Hedron::ProgressBar.new
-    progressbar = @@progressbar.not_nil!
+    @progressbar = Hedron::ProgressBar.new
+    progressbar = @progressbar.not_nil!
     inner.add(progressbar)
 
     group = Hedron::Group.new("Lists")

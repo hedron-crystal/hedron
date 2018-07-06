@@ -1,6 +1,8 @@
+require "./bindings.cr"
+
 module Hedron
   module Control
-    setter stretchy : Bool = false
+    setter stretchy = false
 
     private def to_int(bool : Bool) : Int32
       return bool ? 1 : 0
@@ -10,8 +12,8 @@ module Hedron
       return int == 1 ? true : false
     end
 
-    def stretchy? : Bool
-      return @stretchy
+    def ==(control : Control) : Bool
+      return to_unsafe == control.to_unsafe
     end
 
     def destroy
@@ -40,6 +42,10 @@ module Hedron
 
     def show
       UI.control_show(ui_control(to_unsafe))
+    end
+
+    def stretchy? : Bool
+      return @stretchy
     end
 
     def toplevel? : Bool

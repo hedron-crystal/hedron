@@ -2,8 +2,7 @@ require "../../src/hedron.cr"
 require "./button_tab.cr"
 
 class MLGallery < Hedron::Application
-  @@main : Hedron::Render?
-  @@window : Hedron::Window?
+  @window : Hedron::Window?
 
   def on_closing(this)
     this.destroy
@@ -12,7 +11,7 @@ class MLGallery < Hedron::Application
   end
 
   def should_quit
-    @@window.not_nil!.destroy
+    @window.not_nil!.destroy
     return true
   end
 
@@ -21,19 +20,19 @@ class MLGallery < Hedron::Application
     self.on_stop = ->should_quit
 
     Hedron::Classes.add_class(ButtonTab)
-    @@main = Hedron::HDML.render_file("./examples/ml_gallery/main.hdml")
-    main = @@main.not_nil!
+    main = Hedron::HDML.render_file("./examples/ml_gallery/main.hdml")
 
-    @@window = main["window"].widget.as(Hedron::Window)
-    window = @@window.not_nil!
-    window.on_close = ->on_closing(Hedron::Window)
+    @window = main["window"].widget.as(Hedron::Window)
+    @window.not_nil!.on_close = ->on_closing(Hedron::Window)
+
+    main["btab"].widget.as(ButtonTab).window = @window.not_nil!
 
     main["button"].widget.as(Hedron::Button).on_click do |button|
-      stats = @@main.not_nil!["btab"].widget.as(ButtonTab)
+      stats = main["btab"].widget.as(ButtonTab)
       stats.new_button
     end
 
-    window.show
+    @window.not_nil!.show
   end
 end
 

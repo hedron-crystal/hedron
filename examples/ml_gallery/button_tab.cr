@@ -1,7 +1,8 @@
 require "../../src/hedron.cr"
 
 class ButtonTab < Hedron::Widget
-  @@buttons = [] of Hedron::Button
+  property window : Hedron::Window?
+  @buttons = [] of Hedron::Button
   @counter = 0
 
   def initialize
@@ -29,10 +30,16 @@ class ButtonTab < Hedron::Widget
     button = button.widget.as(Hedron::Button)
 
     button.on_click do |this|
-      puts this.text
+      index = @buttons.index(this).not_nil!
+
+      @window.not_nil!.message(title: "You clicked a button!", description: "You clicked #{this.text}.")
+
+      @buttons.delete_at(index)
+      @display.not_nil!["box"].widget.as(Hedron::VerticalBox).delete(index + 1)
+      this.destroy
     end
 
-    @@buttons.push(button)
+    @buttons.push(button)
 
     @counter += 1
 
