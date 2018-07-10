@@ -134,10 +134,10 @@ module Hedron
 
     def set_property(key : String, value : Any)
       gen_properties({
-        "border" => Bool,
-        "margined" => Bool,
+        "border"     => Bool,
+        "margined"   => Bool,
         "fullscreen" => Bool,
-        "title" => String
+        "title"      => String,
       })
     end
 

@@ -5,7 +5,7 @@ authors:
   - Hanyuan Li <completelyderp@gmail.com>
 
 description: |
-  An easy-to-use, OOP Crystal UI library.
+  A simple OOP UI library, with custom markup integration.
 
 crystal: 0.24.1
 

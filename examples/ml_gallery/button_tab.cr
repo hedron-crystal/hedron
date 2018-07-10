@@ -18,8 +18,13 @@ class ButtonTab < Hedron::Widget
     HDML
   end
 
-  def self.widget_name; return "ButtonTab"; end
-  def self.init_markup; return self.new; end
+  def self.widget_name
+    return "ButtonTab"
+  end
+
+  def self.init_markup
+    return self.new
+  end
 
   def new_button
     button = Hedron::HDML.render <<-HDML
@@ -35,7 +40,7 @@ class ButtonTab < Hedron::Widget
       @window.not_nil!.message(title: "You clicked a button!", description: "You clicked #{this.text}.")
 
       @buttons.delete_at(index)
-      @display.not_nil!["box"].widget.as(Hedron::VerticalBox).delete(index + 1)
+      @display.not_nil!["box"].as(Hedron::VerticalBox).delete(index + 1)
       this.destroy
     end
 
@@ -43,12 +48,12 @@ class ButtonTab < Hedron::Widget
 
     @counter += 1
 
-    @display.not_nil!["box"].widget.as(Hedron::VerticalBox).add(button)
-    @display.not_nil!["label"].widget.as(Hedron::Label).text = "You have made #{@counter} new buttons."
+    @display.not_nil!["box"].as(Hedron::VerticalBox).add(button)
+    @display.not_nil!["label"].as(Hedron::Label).text = "You have made #{@counter} new buttons."
   end
 
   def index=(i : String)
     @index = i
-    @display.not_nil!["box"].widget.index = i
+    @display.not_nil!["box"].index = i
   end
 end

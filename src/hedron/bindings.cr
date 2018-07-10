@@ -1,7 +1,7 @@
 @[Link(ldflags: "-lui")]
 lib UI
-  UIDRAWDEFAULTMITERLIMIT       =                                                             10.0
-  UIPI                          = 3.14159265358979323846264338327950288419716939937510582097494459
+  UIDRAWDEFAULTMITERLIMIT     =                                                             10.0
+  UIPI                        = 3.14159265358979323846264338327950288419716939937510582097494459
   AlignCenter                 =                                                                2
   AlignEnd                    =                                                                3
   AlignFill                   =                                                                0

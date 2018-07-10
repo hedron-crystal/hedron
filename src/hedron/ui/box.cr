@@ -5,7 +5,7 @@ require "../widget/*"
 module Hedron
   abstract class Box < MultipleContainer
     include Control
-    
+
     private def to_int(bool : Bool) : Int32
       return bool ? 1 : 0
     end

@@ -4,8 +4,8 @@ class ControlGallery < Hedron::Application
   @mainwin : Hedron::Window?
 
   @progressbar : Hedron::ProgressBar?
-  @slider      : Hedron::Slider?
-  @spinbox     : Hedron::Spinbox?
+  @slider : Hedron::Slider?
+  @spinbox : Hedron::Spinbox?
 
   def on_closing(this)
     this.destroy
@@ -52,13 +52,11 @@ class ControlGallery < Hedron::Application
     @progressbar.not_nil!.value = value
   end
 
-  def initialize
-    super
-
+  def draw
     file_menu = Hedron::Menu.new("File")
     open = Hedron::MenuItem.new(file_menu, "Open")
     save = Hedron::MenuItem.new(file_menu, "Save")
-    
+
     file_menu.add_quit
     self.on_stop = ->should_quit
 
@@ -106,7 +104,7 @@ class ControlGallery < Hedron::Application
 
     entry = Hedron::Entry.new
     entry.text = "Entry"
-    
+
     inner.add_all(
       entry,
       Hedron::Label.new("Label"),

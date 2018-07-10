@@ -15,27 +15,22 @@ class MLGallery < Hedron::Application
     return true
   end
 
-  def initialize
-    super
+  def draw
     self.on_stop = ->should_quit
 
     Hedron::Classes.add_class(ButtonTab)
     main = Hedron::HDML.render_file("./examples/ml_gallery/main.hdml")
 
-    @window = main["window"].widget.as(Hedron::Window)
+    @window = main["window"].as(Hedron::Window)
     @window.not_nil!.on_close = ->on_closing(Hedron::Window)
 
-    main["btab"].widget.as(ButtonTab).window = @window.not_nil!
+    main["btab"].as(ButtonTab).window = @window.not_nil!
 
-    main["button"].widget.as(Hedron::Button).on_click do |button|
-      stats = main["btab"].widget.as(ButtonTab)
+    main["button"].as(Hedron::Button).on_click do |button|
+      stats = main["btab"].as(ButtonTab)
       stats.new_button
     end
 
     @window.not_nil!.show
   end
 end
-
-gallery = MLGallery.new
-gallery.start
-gallery.close

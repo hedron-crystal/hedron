@@ -19,7 +19,7 @@ module Hedron
     def set_property(key : String, value : Any)
       gen_properties({"stretchy" => Bool})
     end
-    
+
     def to_unsafe
       return @this
     end

@@ -19,7 +19,7 @@ module Hedron
     # Allows for a widget to be initialized in a .hdml file.
     # If you wish to use your own widget in the markup language,
     # you must override this function.
-    # 
+    #
     # This version of `self.init_markup` does not take arguments, so in your .hdml
     # file, you are not allowed to put in initialization arguments. For example, this
     # HDML code will raise an error:
@@ -41,7 +41,7 @@ module Hedron
     # Allows for a widget to be initialized in a .hdml file.
     # If you wish to use your own widget in the markup language,
     # you must override this function.
-    # 
+    #
     # This version of `self.init_markup` takes arguments, so in your .hdml
     # file, you must provide all of your initialization arguments. So, if
     # your widget `Foo` has initialization arguments `bar` and `baz`, you must
@@ -79,7 +79,7 @@ module Hedron
     # ```crystal
     # def set_property(key : String, value : Any)
     #   gen_properties({
-    #     "foo" => Int32
+    #     "foo" => Int32,
     #   })
     # end
     # ```
@@ -102,7 +102,7 @@ module Hedron
     # ```crystal
     # def set_property(key : String, value : Any)
     #   gen_properties({
-    #     "foo" => Int32
+    #     "foo" => Int32,
     #   })
     # end
     # ```
@@ -122,6 +122,7 @@ module Hedron
       return @parent == widget
     end
 
+    # :no-doc:
     def control : Control
       return self.is_a?(Control) ? self : @display.not_nil!.widget.as(Control)
     end

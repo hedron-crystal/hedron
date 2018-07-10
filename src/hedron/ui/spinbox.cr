@@ -7,7 +7,7 @@ module Hedron
     include Control
 
     @@box : Void*?
-    
+
     @this : UI::Spinbox*
 
     def initialize(bounds : Tuple(Int32, Int32))
@@ -47,7 +47,7 @@ module Hedron
     def set_property(key : String, value : Any)
       gen_properties({"stretchy" => Bool, "value" => Int32})
     end
-    
+
     def to_unsafe
       @this
     end

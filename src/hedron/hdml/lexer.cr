@@ -19,12 +19,12 @@ module Hedron::HDML
         id = /^#[a-z0-9\-]+\s*/m.match(control)
 
         tree = if id.nil?
-          Tree.new(control_type)
-        else
-          temp = id.not_nil![0]
-          control = control[temp.size..-1]
-          Tree.new(control_type, temp.strip[1..-1])
-        end
+                 Tree.new(control_type)
+               else
+                 temp = id.not_nil![0]
+                 control = control[temp.size..-1]
+                 Tree.new(control_type, temp.strip[1..-1])
+               end
 
         index = /^\^".+?"\s*/m.match(control)
 
@@ -54,7 +54,7 @@ module Hedron::HDML
         content = control[1...end_index - 1]
         new_index = end_index + /^\s*/i.match(control[end_index + 1..-1]).not_nil![0].size + 1
         control = control[new_index..-1]
-        
+
         parsed_trees.push({tree, content})
       end
 
@@ -72,7 +72,7 @@ module Hedron::HDML
         content.clear if content == [""]
         content = content[0..-2] if content.size > 0 && content[-1] == ""
         index = nil
-        
+
         (0...content.size).each do |n|
           if !content[n].includes?("{")
             key, _, value = content[n].partition(':').map(&.strip)

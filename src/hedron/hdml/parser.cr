@@ -24,25 +24,25 @@ module Hedron::HDML
 
     private def self.set_children(render : Render)
       case render.widget
-        when SingleContainer
-          child = render.children.values[0].widget
-          raise ParseError.new("Child #{child} has index when it's not meant to") unless child.index.nil?
-          raise ParseError.new("SingleContainer can only have one child") if render.children.size != 1
+      when SingleContainer
+        child = render.children.values[0].widget
+        raise ParseError.new("Child #{child} has index when it's not meant to") unless child.index.nil?
+        raise ParseError.new("SingleContainer can only have one child") if render.children.size != 1
 
-          render.widget.as(SingleContainer).child = child
-        when MultipleContainer
-          render.children.each do |_, child|
-            widget = child.widget
-            raise ParseError.new("Child #{child} has index when it's not meant to") unless widget.index.nil?
-            render.widget.as(MultipleContainer).add(widget)
-          end
-        when IndexedContainer
-          render.children.each do |_, child|
-            widget = child.widget
-            index = widget.index
-            raise ParseError.new("Child #{child} does not have index") if index.nil?
-            render.widget.as(IndexedContainer)[index] = widget
-          end
+        render.widget.as(SingleContainer).child = child
+      when MultipleContainer
+        render.children.each do |_, child|
+          widget = child.widget
+          raise ParseError.new("Child #{child} has index when it's not meant to") unless widget.index.nil?
+          render.widget.as(MultipleContainer).add(widget)
+        end
+      when IndexedContainer
+        render.children.each do |_, child|
+          widget = child.widget
+          index = widget.index
+          raise ParseError.new("Child #{child} does not have index") if index.nil?
+          render.widget.as(IndexedContainer)[index] = widget
+        end
       end
     end
 
@@ -50,10 +50,10 @@ module Hedron::HDML
       init_props, props = separate_props(tree.values)
 
       widget = if init_props.size.zero?
-        Classes.classes[tree.node_class].init_markup.as(Widget)
-      else
-        Classes.classes[tree.node_class].init_markup(init_props).as(Widget)
-      end
+                 Classes.classes[tree.node_class].init_markup.as(Widget)
+               else
+                 Classes.classes[tree.node_class].init_markup(init_props).as(Widget)
+               end
 
       widget.id = tree.id
       widget.index = tree.index
@@ -79,10 +79,10 @@ module Hedron::HDML
       children = [] of Render if children.nil?
 
       widget = if init_props.size.zero?
-        Classes.classes[class_name].init_markup.as(Widget)
-      else
-        Classes.classes[class_name].init_markup(init_props).as(Widget)
-      end
+                 Classes.classes[class_name].init_markup.as(Widget)
+               else
+                 Classes.classes[class_name].init_markup(init_props).as(Widget)
+               end
 
       widget.id = id
       widget.index = index

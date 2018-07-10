@@ -1,7 +1,7 @@
 require "./bindings.cr"
 
 module Hedron
-  module Control
+  private module Control
     setter stretchy = false
 
     private def to_int(bool : Bool) : Int32
