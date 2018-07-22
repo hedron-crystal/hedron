@@ -34,7 +34,7 @@ module Hedron::HDML
         render.children.each do |_, child|
           widget = child.widget
           raise ParseError.new("Child #{child} has index when it's not meant to") unless widget.index.nil?
-          render.widget.as(MultipleContainer).add(widget)
+          render.widget.as(MultipleContainer).push(widget)
         end
       when IndexedContainer
         render.children.each do |_, child|

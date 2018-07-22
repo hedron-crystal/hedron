@@ -87,17 +87,17 @@ class ControlGallery < Hedron::Application
     hbox = Hedron::HorizontalBox.new
     hbox.padded = true
     hbox.stretchy = true
-    box.add(hbox)
+    box.push(hbox)
 
     group = Hedron::Group.new("Basic Controls")
     group.margined = true
-    hbox.add(group)
+    hbox.push(group)
 
     inner = Hedron::VerticalBox.new
     inner.padded = true
     group.child = inner
 
-    inner.add_all(
+    inner.push(
       Hedron::Button.new("Button"),
       Hedron::Checkbox.new("Checkbox")
     )
@@ -105,7 +105,7 @@ class ControlGallery < Hedron::Application
     entry = Hedron::Entry.new
     entry.text = "Entry"
 
-    inner.add_all(
+    inner.push(
       entry,
       Hedron::Label.new("Label"),
       Hedron::HorizontalSeparator.new,
@@ -119,11 +119,11 @@ class ControlGallery < Hedron::Application
     inner2 = Hedron::VerticalBox.new
     inner2.padded = true
     inner2.stretchy = true
-    hbox.add(inner2)
+    hbox.push(inner2)
 
     group = Hedron::Group.new("Numbers")
     group.margined = true
-    inner2.add(group)
+    inner2.push(group)
 
     inner = Hedron::VerticalBox.new
     inner.padded = true
@@ -132,20 +132,20 @@ class ControlGallery < Hedron::Application
     @spinbox = Hedron::Spinbox.new({0, 100})
     spinbox = @spinbox.not_nil!
     spinbox.on_change = ->on_spinbox_changed(Hedron::Spinbox)
-    inner.add(spinbox)
+    inner.push(spinbox)
 
     @slider = Hedron::Slider.new({0, 100})
     slider = @slider.not_nil!
     slider.on_change = ->on_slider_changed(Hedron::Slider)
-    inner.add(slider)
+    inner.push(slider)
 
     @progressbar = Hedron::ProgressBar.new
     progressbar = @progressbar.not_nil!
-    inner.add(progressbar)
+    inner.push(progressbar)
 
     group = Hedron::Group.new("Lists")
     group.margined = true
-    inner2.add(group)
+    inner2.push(group)
 
     inner = Hedron::VerticalBox.new
     inner.padded = true
@@ -153,23 +153,23 @@ class ControlGallery < Hedron::Application
 
     cbox = Hedron::Combobox.new
     cbox.choices = ["Combobox Item 1", "Combobox Item 2", "Combobox Item 3"]
-    inner.add(cbox)
+    inner.push(cbox)
 
     ecbox = Hedron::EditableCombobox.new
     ecbox.choices = ["Editable Item 1", "Editable Item 2", "Editable Item 3"]
-    inner.add(ecbox)
+    inner.push(ecbox)
 
     rb = Hedron::RadioButtons.new
     rb.choices = ["Radio Button 1", "Radio Button 2", "Radio Button 3"]
     rb.stretchy = true
-    inner.add(rb)
+    inner.push(rb)
 
     tab = Hedron::Tab.new
     tab["Page 1"] = Hedron::HorizontalBox.new
     tab["Page 2"] = Hedron::HorizontalBox.new
     tab["Page 3"] = Hedron::HorizontalBox.new
     tab.stretchy = true
-    inner2.add(tab)
+    inner2.push(tab)
 
     mainwin.show
   end

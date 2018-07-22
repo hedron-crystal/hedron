@@ -48,7 +48,7 @@ class ButtonTab < Hedron::Widget
 
     @counter += 1
 
-    self.display["box"].as(Hedron::VerticalBox).add(button)
+    self.display["box"].as(Hedron::VerticalBox).push(button)
     self.display["label"].as(Hedron::Label).text = "You have made #{@counter} new buttons."
   end
 

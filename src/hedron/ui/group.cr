@@ -8,14 +8,6 @@ module Hedron
 
     @this : UI::Group*
 
-    private def to_int(bool : Bool) : Int32
-      return bool ? 1 : 0
-    end
-
-    private def to_bool(int : Int32) : Bool
-      return int == 1 ? true : false
-    end
-
     def initialize(title : String)
       @this = UI.new_group(title)
     end
@@ -42,7 +34,7 @@ module Hedron
 
     def child=(child : Widget)
       child.parent = self
-      UI.group_set_child(to_unsafe, ui_control(child.control.as(Control).to_unsafe))
+      UI.group_set_child(to_unsafe, ui_control(child.control.to_unsafe))
     end
 
     def set_property(key : String, value : Any)

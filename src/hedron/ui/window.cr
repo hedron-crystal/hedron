@@ -11,14 +11,6 @@ module Hedron
 
     @this : UI::Window*
 
-    private def to_int(bool : Bool) : Int32
-      return bool ? 1 : 0
-    end
-
-    private def to_bool(int : Int32) : Bool
-      return int == 1 ? true : false
-    end
-
     # Takes three arguments:
     # - `title`: The title of the window
     # - `dimensions`: Two Int32 values, {width, height}

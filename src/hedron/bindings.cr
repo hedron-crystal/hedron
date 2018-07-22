@@ -577,3 +577,11 @@ end
 macro ui_nil?(ptr)
   {{ptr}}.null?
 end
+
+def to_int(bool : Bool) : Int32
+  return bool ? 1 : 0
+end
+
+def to_bool(int : Int32) : Bool
+  return int == 1 ? true : false
+end

@@ -8,14 +8,6 @@ module Hedron
 
     @this : UI::MultilineEntry*
 
-    private def to_int(bool : Bool) : Int32
-      return bool ? 1 : 0
-    end
-
-    private def to_bool(int : Int32) : Bool
-      return int == 1 ? true : false
-    end
-
     def initialize
       @this = UI.new_multiline_entry
     end
@@ -24,10 +16,6 @@ module Hedron
 
     def self.init_markup
       return self.new
-    end
-
-    def add(entry_text : String)
-      UI.multiline_entry_append(to_unsafe, entry_text)
     end
 
     def on_click(&block : MultilineEntry ->)
@@ -44,6 +32,10 @@ module Hedron
       }
 
       UI.multiline_entry_on_changed(to_unsafe, new_proc, boxed_data)
+    end
+
+    def push(entry_text : String)
+      UI.multiline_entry_append(to_unsafe, entry_text)
     end
 
     def read_only? : Bool

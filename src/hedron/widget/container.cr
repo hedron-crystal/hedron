@@ -14,11 +14,11 @@ module Hedron
   # An example usage is `Hedron::Box`, which takes multiple children widgets
   # and stacks them horizontally or vertically into a single widget.
   abstract class MultipleContainer < Widget
-    # Adds a child to a MultipleContainer.
-    abstract def add(child : Widget)
-
     # Given an index, delete the nth widget in the MultipleContainer.
     abstract def delete_at(index : Int32)
+
+    # Adds a child to a MultipleContainer.
+    abstract def push(child : Widget)
   end
 
   # Override this class to have a widget take multiple children, with each

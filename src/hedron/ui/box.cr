@@ -6,23 +6,6 @@ module Hedron
   abstract class Box < MultipleContainer
     include Control
 
-    private def to_int(bool : Bool) : Int32
-      return bool ? 1 : 0
-    end
-
-    private def to_bool(int : Int32) : Bool
-      return int == 1 ? true : false
-    end
-
-    def add(child : Widget)
-      child.parent = self
-      UI.box_append(to_unsafe, ui_control(child.control.to_unsafe), to_int(child.control.stretchy?))
-    end
-
-    def add_all(*children : Widget)
-      children.each { |child| add(child) }
-    end
-
     def delete_at(index : Int32)
       UI.box_delete(to_unsafe, index)
     end
@@ -33,6 +16,15 @@ module Hedron
 
     def padded=(is_padded : Bool)
       UI.box_set_padded(to_unsafe, to_int(is_padded))
+    end
+
+    def push(child : Widget)
+      child.parent = self
+      UI.box_append(to_unsafe, ui_control(child.control.to_unsafe), to_int(child.control.stretchy?))
+    end
+
+    def push(*children : Widget)
+      children.each { |child| add(child) }
     end
 
     def set_property(key : String, value : Any)

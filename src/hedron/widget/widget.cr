@@ -115,7 +115,7 @@ module Hedron
     # ```crystal
     # foo = Hedron::Box.new
     # button = Hedron::Button.new("Button")
-    # foo.add(button)
+    # foo.push(button)
     # button.parent?(foo) # => true
     # ```
     def parent?(widget : Widget) : Bool

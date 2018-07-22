@@ -4,14 +4,6 @@ module Hedron
   private module Control
     setter stretchy = false
 
-    private def to_int(bool : Bool) : Int32
-      return bool ? 1 : 0
-    end
-
-    private def to_bool(int : Int32) : Bool
-      return int == 1 ? true : false
-    end
-
     def ==(control : Control) : Bool
       return to_unsafe == control.to_unsafe
     end
