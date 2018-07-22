@@ -1,4 +1,5 @@
 module Hedron
+  # Representation of colour in Hedron, used in `Hedron::ColorButton`.
   struct Color
     getter red : UInt8
     getter green : UInt8

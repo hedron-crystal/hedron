@@ -1,10 +1,9 @@
 require "./bindings.cr"
 
 module Hedron
-  # A basic class that allows people to create their own Hedron apps.
-  # To create a Hedron app, extend `Hedron::Application` and place all the
-  # UI instructions in the `initialize` method, and implement the `draw`
-  # method.
+  # A basic class that allows users to create their own Hedron apps.
+  # To create a Hedron app, extend `Hedron::Application` and place all of
+  # your UI instructions in the `draw` method.
   abstract class Application
     @@box : Void*?
 

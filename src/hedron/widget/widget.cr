@@ -9,10 +9,10 @@ module Hedron
   # Hedron are derived from.
   abstract class Widget
     property parent : Widget?
-    property id : String?
+    property! id : String
     property index : String?
 
-    property display : Render?
+    property! display : Render
 
     # Markup language integration functions
 
@@ -124,7 +124,7 @@ module Hedron
 
     # :no-doc:
     def control : Control
-      return self.is_a?(Control) ? self : @display.not_nil!.widget.as(Control)
+      return self.is_a?(Control) ? self : display.widget.as(Control)
     end
   end
 end

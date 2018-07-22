@@ -11,14 +11,13 @@ module Hedron
     getter aliases = {} of String => Array(String)
 
     def initialize(@widget)
-      id = @widget.id.not_nil!
-      @aliases[id] = [] of String if id[0] != '!'
+      @aliases[@widget.id] = [] of String if @widget.id[0] != '!'
       @children = {} of String => Render
     end
 
     # :no-doc:
     def add_child(child : Render)
-      id = child.widget.id.not_nil!
+      id = child.widget.id
 
       @aliases[id] = [] of String if id[0] != '!'
 

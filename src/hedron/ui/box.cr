@@ -23,7 +23,7 @@ module Hedron
       children.each { |child| add(child) }
     end
 
-    def delete(index : Int32)
+    def delete_at(index : Int32)
       UI.box_delete(to_unsafe, index)
     end
 

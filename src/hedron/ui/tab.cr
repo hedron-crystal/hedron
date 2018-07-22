@@ -28,7 +28,7 @@ module Hedron
       UI.tab_append(to_unsafe, name, ui_control(child.control.as(Control).to_unsafe))
     end
 
-    def delete(index : Int32)
+    def delete_at(index : Int32)
       UI.tab_delete(to_unsafe, index)
     end
 

@@ -46,39 +46,48 @@ module Hedron
       )
     end
 
+    # Checks if the window has a border.
     def border? : Bool
       return !to_bool(UI.window_borderless(to_unsafe))
     end
 
+    # Adds/removes borders in a window.
     def border=(is_borderless : Bool)
       UI.window_set_borderless(to_unsafe, to_int(!is_borderless))
     end
 
+    # Checks whether the window is margined or not.
     def margined? : Bool
       return to_bool(UI.window_margined(to_unsafe))
     end
 
+    # Adds/removes margins in a window.
     def margined=(is_margined : Bool)
       UI.window_set_margined(to_unsafe, to_int(is_margined))
     end
 
+    # Fetches the current size of the window.
     def size : Tuple(Int32, Int32)
       UI.window_content_size(to_unsafe, out width, out height)
       return {width, height}
     end
 
+    # Programmatically sets the size of a given window.
     def size=(dimensions : Tuple(Int32, Int32))
       UI.window_set_content_size(to_unsafe, dimensions[0], dimensions[1])
     end
 
+    # Checks whether the window is in fullscreen mode or not.
     def fullscreen? : Bool
       return to_bool(UI.window_fullscreen(to_unsafe))
     end
 
+    # Sets the window to fullscreen/non-fullscreen mode.
     def fullscreen=(is_fullscreen : Bool)
       UI.window_set_fullscreen(to_unsafe, to_int(is_fullscreen))
     end
 
+    # Adds a child for the window.
     def child=(child : Widget)
       child.parent = self
       UI.window_set_child(to_unsafe, ui_control(child.control.as(Control).to_unsafe))

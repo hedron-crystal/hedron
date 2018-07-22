@@ -50,10 +50,10 @@ module Hedron::HDML
       init_props, props = separate_props(tree.values)
 
       widget = if init_props.size.zero?
-                 Classes.classes[tree.node_class].init_markup.as(Widget)
-               else
-                 Classes.classes[tree.node_class].init_markup(init_props).as(Widget)
-               end
+        Classes.classes[tree.node_class].init_markup.as(Widget)
+      else
+        Classes.classes[tree.node_class].init_markup(init_props).as(Widget)
+      end
 
       widget.id = tree.id
       widget.index = tree.index
@@ -79,10 +79,10 @@ module Hedron::HDML
       children = [] of Render if children.nil?
 
       widget = if init_props.size.zero?
-                 Classes.classes[class_name].init_markup.as(Widget)
-               else
-                 Classes.classes[class_name].init_markup(init_props).as(Widget)
-               end
+        Classes.classes[class_name].init_markup.as(Widget)
+      else
+        Classes.classes[class_name].init_markup(init_props).as(Widget)
+      end
 
       widget.id = id
       widget.index = index
