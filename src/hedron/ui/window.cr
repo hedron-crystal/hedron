@@ -109,7 +109,7 @@ module Hedron
       UI.window_on_content_size_changed(to_unsafe, new_proc, boxed_data)
     end
 
-    def on_close(&block)
+    def on_close(&block : Window -> Bool)
       on_close = block
     end
 

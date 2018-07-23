@@ -8,7 +8,7 @@ module Hedron
     @@box : Void*?
 
     # Override this method to draw UI to the application itself.
-    # 
+    #
     # ```crystal
     # class Foo < Hedron::Application
     #   def draw
@@ -36,7 +36,7 @@ module Hedron
 
     # Execute a set of instructions when the application
     # is stopped.
-    # 
+    #
     # ```crystal
     # on_stop do
     #   # Execute all instructions when stopped
@@ -48,7 +48,7 @@ module Hedron
 
     # Same as `on_stop(&block)`, except a function
     # can be passed through this.
-    # 
+    #
     # ```crystal
     # on_stop = foo # Here, foo is a Proc
     # ```

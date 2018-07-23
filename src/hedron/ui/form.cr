@@ -9,7 +9,7 @@ module Hedron
     @this : UI::Form*
 
     def initialize
-      @this = UI.new_form()
+      @this = UI.new_form
     end
 
     def delete_at(index : Int32)

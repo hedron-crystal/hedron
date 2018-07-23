@@ -30,15 +30,15 @@ module Hedron
 
     # Fetches a widget from rendered HDML based on ID.
     # For example, if `foo.hdml` looked like this:
-    # 
+    #
     # ```
     # Button #button {
     #   @text: "Hello, World!";
     # }
     # ```
-    # 
+    #
     # You can fetch `#button` by doing this:
-    # 
+    #
     # ```crystal
     # foo = Hedron::HDML.render_file("foo.hdml")
     # foo["button"]
@@ -59,7 +59,7 @@ module Hedron
 
     # Fetches all widgets from rendered HDML based on a class - all
     # widgets that share the same class as the one given will be returned.
-    # 
+    #
     # For example, if `foo.hdml` looked like this:
     # ```
     # VerticalBox {
@@ -72,7 +72,7 @@ module Hedron
     #   }
     # }
     # ```
-    # 
+    #
     # You can do this to access all buttons in `foo.hdml`:
     # ```crystal
     # foo = Hedron::HDML.render_file("foo.hdml")

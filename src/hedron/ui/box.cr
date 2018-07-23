@@ -24,7 +24,7 @@ module Hedron
     end
 
     def push(*children : Widget)
-      children.each { |child| add(child) }
+      children.each { |child| push(child) }
     end
 
     def set_property(key : String, value : Any)

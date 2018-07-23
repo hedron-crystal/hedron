@@ -20,7 +20,7 @@ module Hedron
 
     # Used when a custom class is to be added to `Hedron::Parser`.
     # The class added must extend `Hedron::Widget`.
-    # 
+    #
     # ```crystal
     # Hedron::Classes.add_class(Foo) # Foo < Hedron::Widget
     # # Now you can use Foo in your HDML files and eval statements!
