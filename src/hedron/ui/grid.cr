@@ -7,12 +7,10 @@ require "../widget/*"
 module Hedron
   struct GridCell
     property size : Tuple(Int32, Int32)
-    property expand_x : Bool
-    property align_x : Align
-    property expand_y : Bool
-    property align_y : Align
+    property expand : Tuple(Bool, Bool)
+    property align : Tuple(Align, Align)
 
-    def initialize(@size, @expand_x, @align_x, @expand_y, @align_y); end
+    def initialize(@size, @expand, @align); end
   end
 
   class Grid < Widget
@@ -31,8 +29,8 @@ module Hedron
         ui_control(next_to.control.to_unsafe),
         side,
         cell_info.size[0], cell_info.size[1],
-        to_int(cell_info.expand_x), cell_info.align_x.value,
-        to_int(cell_info.expand_y), cell_info.align_y.value
+        to_int(cell_info.expand[0]), cell_info.align[0].value,
+        to_int(cell_info.expand[1]), cell_info.align[1].value
       )
     end
 
@@ -50,8 +48,8 @@ module Hedron
         ui_control(widget.control.to_unsafe),
         coords[0], coords[1],
         cell_info.size[0], cell_info.size[1],
-        to_int(cell_info.expand_x), cell_info.align_x.value,
-        to_int(cell_info.expand_y), cell_info.align_y.value
+        to_int(cell_info.expand[0]), cell_info.align[0].value,
+        to_int(cell_info.expand[1]), cell_info.align[1].value
       )
     end
 
