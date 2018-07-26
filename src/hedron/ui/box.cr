@@ -20,7 +20,7 @@ module Hedron
 
     def push(child : Widget)
       child.parent = self
-      UI.box_append(to_unsafe, ui_control(child.control.to_unsafe), to_int(child.control.stretchy?))
+      UI.box_append(to_unsafe, ui_control(child.control.to_unsafe), to_int(child.control.stretchy))
     end
 
     def push(*children : Widget)

@@ -2,7 +2,7 @@ require "./bindings.cr"
 
 module Hedron
   private module Control
-    setter stretchy = false
+    property stretchy = false
 
     def ==(control : Control) : Bool
       return to_unsafe == control.to_unsafe
@@ -34,10 +34,6 @@ module Hedron
 
     def show
       UI.control_show(ui_control(to_unsafe))
-    end
-
-    def stretchy? : Bool
-      return @stretchy
     end
 
     def toplevel? : Bool

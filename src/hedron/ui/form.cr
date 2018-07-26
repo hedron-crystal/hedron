@@ -25,7 +25,7 @@ module Hedron
     end
 
     def push(label : Label, widget : Widget)
-      UI.form_append(to_unsafe, label.to_unsafe, ui_control(widget.control.to_unsafe), to_int(widget.control.stretchy?))
+      UI.form_append(to_unsafe, label.to_unsafe, ui_control(widget.control.to_unsafe), to_int(widget.control.stretchy))
     end
 
     def to_unsafe
