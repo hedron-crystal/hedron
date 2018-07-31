@@ -1,15 +1,14 @@
 require "../bindings.cr"
-require "../control.cr"
-require "../widget/*"
+require "../widget/control.cr"
 
 module Hedron
-  class MultilineEntry < Widget
-    include Control
-
-    @this : UI::MultilineEntry*
+  class MultilineEntry < Control
+    gen_properties({
+      "stretchy" => Bool, "read_only" => Bool, "text" => String
+    })
 
     def initialize
-      @this = UI.new_multiline_entry
+      @this = ui_control(UI.new_multiline_entry)
     end
 
     def initialize(@this); end
@@ -28,7 +27,7 @@ module Hedron
 
       new_proc = ->(ml_entry : UI::MultilineEntry*, data : Void*) {
         callback = ::Box(Proc(MultilineEntry, Nil)).unbox(data)
-        callback.call(MultilineEntry.new(ml_entry))
+        callback.call(MultilineEntry.new(ui_control(ml_entry)))
       }
 
       UI.multiline_entry_on_changed(to_unsafe, new_proc, boxed_data)
@@ -54,22 +53,14 @@ module Hedron
       UI.multiline_entry_set_text(to_unsafe, entry_text)
     end
 
-    def set_property(key : String, value : Any)
-      gen_properties({"stretchy" => Bool, "read_only" => Bool, "text" => String})
-    end
-
     def to_unsafe
-      return @this
+      return @this.as(UI::MultilineEntry*)
     end
   end
 
   class NonWrappingMultilineEntry < MultilineEntry
     def initialize
-      @this = UI.new_non_wrapping_multiline_entry
-    end
-
-    def to_unsafe
-      return @this
+      @this = ui_control(UI.new_non_wrapping_multiline_entry)
     end
   end
 end

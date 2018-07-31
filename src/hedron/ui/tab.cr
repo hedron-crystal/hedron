@@ -1,16 +1,18 @@
 require "../bindings.cr"
-require "../control.cr"
-require "../widget/*"
+require "../widget/container.cr"
+require "../widget/control.cr"
 
 module Hedron
-  class Tab < IndexedContainer
-    include Control
+  class Tab < Control
+    include IndexedContainer
 
-    @this : UI::Tab*
+    gen_properties({"stretchy" => Bool})
 
     def initialize
-      @this = UI.new_tab
+      @this = ui_control(UI.new_tab)
     end
+
+    def initialize(@this); end
 
     def self.init_markup
       return self.new
@@ -40,12 +42,8 @@ module Hedron
       UI.tab_set_margined(to_unsafe, to_int(is_margined))
     end
 
-    def set_property(key : String, value : Any)
-      gen_properties({"stretchy" => Bool})
-    end
-
     def to_unsafe
-      return @this
+      return @this.as(UI::Tab*)
     end
   end
 end

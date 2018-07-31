@@ -1,5 +1,5 @@
 require "../bindings.cr"
-require "../widget/*"
+
 
 module Hedron
   class Menu

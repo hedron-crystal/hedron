@@ -5,7 +5,7 @@ module Hedron
   # An example usage is `Hedron::Window`, which takes any widget and
   # places it into a window, effectively making that widget its child and
   # surrounding it into a window.
-  abstract class SingleContainer < Widget
+  module SingleContainer
     # Sets the only child for a SingleContainer.
     abstract def child=(child : Widget)
   end
@@ -13,7 +13,7 @@ module Hedron
   # Override this class to have a widget take multiple children.
   # An example usage is `Hedron::Box`, which takes multiple children widgets
   # and stacks them horizontally or vertically into a single widget.
-  abstract class MultipleContainer < Widget
+  module MultipleContainer
     # Given an index, delete the nth widget in the MultipleContainer.
     abstract def delete_at(index : Int32)
 
@@ -26,7 +26,7 @@ module Hedron
   # An example is `Hedron::Tab`, which takes multiple children widgets and
   # assigns them each to a separate tab, each with their own separate titles
   # as strings.
-  abstract class IndexedContainer < Widget
+  module IndexedContainer
     # Sets a child widget with a specific `index`.
     abstract def []=(index : String, child : Widget)
 

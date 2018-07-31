@@ -1,16 +1,15 @@
 require "../bindings.cr"
-require "../control.cr"
-require "../widget/*"
+require "../widget/control.cr"
 
 module Hedron
-  class Checkbox < Widget
-    include Control
-
-    @this : UI::Checkbox*
+  class Checkbox < Control
+    gen_properties({"stretchy" => Bool, "checked" => Bool, "text" => String})
 
     def initialize(text : String)
-      @this = UI.new_checkbox(text)
+      @this = ui_control(UI.new_checkbox(text))
     end
+
+    def initialize(@this); end
 
     def self.init_markup(args : MLArgs)
       return self.new(args["text"].as(String))
@@ -32,12 +31,8 @@ module Hedron
       UI.checkbox_set_text(to_unsafe, checkbox_text)
     end
 
-    def set_property(key : String, value : Any)
-      gen_properties({"stretchy" => Bool, "checked" => Bool, "text" => String})
-    end
-
     def to_unsafe
-      return @this
+      return @this.as(UI::Checkbox*)
     end
   end
 end

@@ -1,37 +1,32 @@
 require "../bindings.cr"
-require "../control.cr"
-require "../widget/*"
+require "../widget/control.cr"
 
 module Hedron
-  abstract class Separator < Widget
-    include Control
-  end
-
-  class HorizontalSeparator < Separator
-    @this : UI::Separator*
-
+  class HorizontalSeparator < Control
     def initialize
-      @this = UI.new_horizontal_separator
+      @this = ui_control(UI.new_horizontal_separator)
     end
+
+    def initialize(@this); end
 
     def self.init_markup
       return self.new
     end
 
     def to_unsafe
-      return @this
+      return @this.as(UI::Separator*)
     end
   end
 
-  class VerticalSeparator < Separator
-    @this : UI::Separator*
-
+  class VerticalSeparator < Control
     def initialize
       @this = UI.new_vertical_separator
     end
 
+    def initialize(@this); end
+
     def to_unsafe
-      return @this
+      return @this.as(UI::Separator*)
     end
   end
 end

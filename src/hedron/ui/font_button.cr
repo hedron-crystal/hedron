@@ -1,17 +1,15 @@
 require "../bindings.cr"
-require "../control.cr"
-require "../widget/*"
+require "../widget/control.cr"
+
 
 module Hedron
-  class FontButton < Widget
-    include Control
-
+  class FontButton < Control
     @@box : Void*?
 
-    @this : UI::FontButton*
+    gen_properties({"stretchy" => Bool})
 
     def initialize
-      @this = UI.new_font_button
+      @this = ui_control(UI.new_font_button)
     end
 
     def initialize(@this); end
@@ -35,18 +33,14 @@ module Hedron
 
       new_proc = ->(font_button : UI::FontButton*, data : Void*) {
         callback = ::Box(Proc(FontButton, Nil)).unbox(data)
-        callback.call(FontButton.new(font_button))
+        callback.call(FontButton.new(ui_control(font_button)))
       }
 
       UI.font_button_on_changed(to_unsafe, new_proc, boxed_data)
     end
 
-    def set_property(key : String, value : Any)
-      gen_properties({"stretchy" => Bool})
-    end
-
     def to_unsafe
-      return @this
+      return @this.as(UI::FontButton*)
     end
   end
 end

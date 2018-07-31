@@ -1,5 +1,5 @@
 require "../ui/*"
-require "../widget/*"
+
 require "../render.cr"
 require "./lexer.cr"
 require "./tree.cr"

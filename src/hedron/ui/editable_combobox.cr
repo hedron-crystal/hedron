@@ -1,17 +1,14 @@
 require "../bindings.cr"
-require "../control.cr"
-require "../widget/*"
+require "../widget/control.cr"
 
 module Hedron
-  class EditableCombobox < Widget
-    include Control
-
+  class EditableCombobox < Control
     @@box : Void*?
 
-    @this : UI::EditableCombobox*
+    gen_properties({"stretchy" => Bool, "text" => String})
 
     def initialize
-      @this = UI.new_editable_combobox
+      @this = ui_control(UI.new_editable_combobox)
     end
 
     def initialize(@this); end
@@ -36,7 +33,7 @@ module Hedron
 
       new_proc = ->(combobox : UI::EditableCombobox*, data : Void*) {
         callback = ::Box(Proc(EditableCombobox, Nil)).unbox(data)
-        callback.call(EditableCombobox.new(combobox))
+        callback.call(EditableCombobox.new(ui_control(combobox)))
       }
 
       UI.editable_combobox_on_selected(to_unsafe, new_proc, boxed_data)
@@ -50,12 +47,8 @@ module Hedron
       UI.editable_combobox_set_text(to_unsafe, ecbox_text)
     end
 
-    def set_property(key : String, value : Any)
-      gen_properties({"stretchy" => Bool, "text" => String})
-    end
-
     def to_unsafe
-      return @this
+      return @this.as(UI::EditableCombobox*)
     end
   end
 end

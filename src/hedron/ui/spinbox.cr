@@ -1,17 +1,14 @@
 require "../bindings.cr"
-require "../control.cr"
-require "../widget/*"
+require "../widget/control.cr"
 
 module Hedron
-  class Spinbox < Widget
-    include Control
-
+  class Spinbox < Control
     @@box : Void*?
 
-    @this : UI::Spinbox*
+    gen_properties({"stretchy" => Bool, "value" => Int32})
 
     def initialize(bounds : Tuple(Int32, Int32))
-      @this = UI.new_spinbox(bounds[0], bounds[1])
+      @this = ui_control(UI.new_spinbox(bounds[0], bounds[1]))
     end
 
     def initialize(@this); end
@@ -30,7 +27,7 @@ module Hedron
 
       new_proc = ->(spinbox : UI::Spinbox*, data : Void*) {
         callback = ::Box(Proc(Spinbox, Nil)).unbox(data)
-        callback.call(Spinbox.new(spinbox))
+        callback.call(Spinbox.new(ui_control(spinbox)))
       }
 
       UI.spinbox_on_changed(to_unsafe, new_proc, boxed_data)
@@ -44,12 +41,8 @@ module Hedron
       UI.spinbox_set_value(to_unsafe, val)
     end
 
-    def set_property(key : String, value : Any)
-      gen_properties({"stretchy" => Bool, "value" => Int32})
-    end
-
     def to_unsafe
-      @this
+      @this.as(UI::Spinbox*)
     end
   end
 end

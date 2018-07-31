@@ -1,10 +1,12 @@
 require "../bindings.cr"
-require "../control.cr"
-require "../widget/*"
+require "../widget/container.cr"
+require "../widget/control.cr"
 
 module Hedron
-  abstract class Box < MultipleContainer
-    include Control
+  abstract class Box < Control
+    include MultipleContainer
+
+    gen_properties({"stretchy" => Bool, "padded" => Bool})
 
     def delete_at(index : Int32)
       UI.box_delete(to_unsafe, index)
@@ -26,41 +28,37 @@ module Hedron
     def push(*children : Widget)
       children.each { |child| push(child) }
     end
-
-    def set_property(key : String, value : Any)
-      gen_properties({"stretchy" => Bool, "padded" => Bool})
-    end
   end
 
   class VerticalBox < Box
-    @this : UI::Box*
-
     def initialize
-      @this = UI.new_vertical_box
+      @this = ui_control(UI.new_vertical_box)
     end
+
+    def initialize(@this); end
 
     def self.init_markup
       return self.new
     end
 
-    def to_unsafe
-      return @this
+    def to_unsafe : UI::Box*
+      return @this.as(UI::Box*)
     end
   end
 
   class HorizontalBox < Box
-    @this : UI::Box*
-
     def initialize
-      @this = UI.new_horizontal_box
+      @this = ui_control(UI.new_horizontal_box)
     end
+
+    def initialize(@this); end
 
     def self.init_markup
       return self.new
     end
 
-    def to_unsafe
-      return @this
+    def to_unsafe : UI::Box*
+      return @this.as(UI::Box*)
     end
   end
 end

@@ -1,8 +1,7 @@
 require "../bindings.cr"
-require "../control.cr"
+require "../widget/control.cr"
 require "../struct/align.cr"
 require "../struct/side.cr"
-require "../widget/*"
 
 module Hedron
   struct GridCell
@@ -13,14 +12,12 @@ module Hedron
     def initialize(@size, @expand, @align); end
   end
 
-  class Grid < Widget
-    include Control
-
-    @this : UI::Grid*
-
+  class Grid < Control
     def initialize
       @this = UI.new_grid
     end
+
+    def initialize(@this); end
 
     def insert(widget : Widget, next_to : Widget, side : Side, cell_info : GridCell)
       UI.grid_insert_at(
@@ -54,7 +51,7 @@ module Hedron
     end
 
     def to_unsafe
-      return @this
+      return @this.as(UI::Grid*)
     end
   end
 end

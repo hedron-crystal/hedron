@@ -1,17 +1,15 @@
 require "../bindings.cr"
-require "../control.cr"
-require "../widget/*"
+require "../widget/control.cr"
+
 
 module Hedron
-  class Button < Widget
-    include Control
-
+  class Button < Control
+    gen_properties({"stretchy" => Bool, "text" => String})
+    
     @@box : Void*?
 
-    @this : UI::Button*
-
     def initialize(text : String)
-      @this = UI.new_button(text)
+      @this = ui_control(UI.new_button(text))
     end
 
     def initialize(@this); end
@@ -30,7 +28,7 @@ module Hedron
 
       new_proc = ->(button : UI::Button*, data : Void*) {
         callback = ::Box(Proc(Button, Nil)).unbox(data)
-        callback.call(Button.new(button))
+        callback.call(Button.new(ui_control(button)))
       }
 
       UI.button_on_clicked(to_unsafe, new_proc, boxed_data)
@@ -44,12 +42,8 @@ module Hedron
       UI.button_set_text(to_unsafe, button_text)
     end
 
-    def set_property(key : String, value : Any)
-      gen_properties({"stretchy" => Bool, "text" => String})
-    end
-
     def to_unsafe
-      return @this
+      return @this.as(UI::Button*)
     end
   end
 end

@@ -9,7 +9,7 @@ module Hedron
       Button, Checkbox, ColorButton, Combobox, DatePicker, DateTimePicker,
       EditableCombobox, Entry, FontButton, Group, HorizontalBox, HorizontalSeparator,
       Label, MultilineEntry, NonWrappingMultilineEntry, PasswordEntry, ProgressBar,
-      RadioButtons, SearchEntry, Separator, Slider, Spinbox, Tab, VerticalBox,
+      RadioButtons, SearchEntry, Slider, Spinbox, Tab, VerticalBox,
       VerticalSeparator, Window,
     ] of Widget.class
 

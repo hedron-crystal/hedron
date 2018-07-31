@@ -1,16 +1,14 @@
 require "../bindings.cr"
-require "../control.cr"
-require "../widget/*"
+require "../widget/control.cr"
+
 
 module Hedron
-  class Form < Widget
-    include Control
-
-    @this : UI::Form*
-
+  class Form < Control
     def initialize
       @this = UI.new_form
     end
+
+    def initialize(@this); end
 
     def delete_at(index : Int32)
       UI.form_delete(to_unsafe, index)
@@ -29,7 +27,7 @@ module Hedron
     end
 
     def to_unsafe
-      return @this
+      return @this.as(UI::Form*)
     end
   end
 end

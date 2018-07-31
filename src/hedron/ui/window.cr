@@ -1,22 +1,27 @@
 require "../bindings.cr"
-require "../control.cr"
-require "../widget/*"
+require "../widget/container.cr"
+require "../widget/control.cr"
 
 module Hedron
-  class Window < SingleContainer
-    include Control
+  class Window < Control
+    include SingleContainer
 
     @@size_change_box : Void*?
     @@close_box : Void*?
 
-    @this : UI::Window*
+    gen_properties({
+      "border"     => Bool,
+      "margined"   => Bool,
+      "fullscreen" => Bool,
+      "title"      => String,
+    })
 
     # Takes three arguments:
     # - `title`: The title of the window
     # - `dimensions`: Two Int32 values, {width, height}
     # - `menubar`: Whether the window has a menubar or not, defaults to false
     def initialize(title : String, dimensions : Tuple(Int32, Int32), menubar : Bool = false)
-      @this = UI.new_window(title, dimensions[0], dimensions[1], to_int(menubar))
+      @this = ui_control(UI.new_window(title, dimensions[0], dimensions[1], to_int(menubar)))
     end
 
     def initialize(@this); end
@@ -103,7 +108,7 @@ module Hedron
 
       new_proc = ->(window : UI::Window*, data : Void*) {
         callback = ::Box(Proc(Window, Nil)).unbox(data)
-        callback.call(Window.new(window))
+        callback.call(Window.new(ui_control(window)))
       }
 
       UI.window_on_content_size_changed(to_unsafe, new_proc, boxed_data)
@@ -119,7 +124,7 @@ module Hedron
 
       new_proc = ->(window : UI::Window*, data : Void*) {
         callback = ::Box(Proc(Window, Bool)).unbox(data)
-        return callback.call(Window.new(window)) ? 1 : 0
+        return callback.call(Window.new(ui_control(window))) ? 1 : 0
       }
 
       UI.window_on_closing(to_unsafe, new_proc, boxed_data)
@@ -133,17 +138,8 @@ module Hedron
       UI.msg_box(to_unsafe, title, description)
     end
 
-    def set_property(key : String, value : Any)
-      gen_properties({
-        "border"     => Bool,
-        "margined"   => Bool,
-        "fullscreen" => Bool,
-        "title"      => String,
-      })
-    end
-
     def to_unsafe
-      return @this
+      return @this.as(UI::Window*)
     end
   end
 end

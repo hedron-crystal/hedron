@@ -1,18 +1,17 @@
 require "../bindings.cr"
-require "../control.cr"
-require "../widget/*"
+require "../widget/control.cr"
 
 module Hedron
-  class RadioButtons < Widget
-    include Control
-
+  class RadioButtons < Control
     @@box : Void*?
 
-    @this : UI::RadioButtons*
+    gen_properties({"stretchy" => Bool, "selected" => Int32})
 
     def initialize
-      @this = UI.new_radio_buttons
+      @this = ui_control(UI.new_radio_buttons)
     end
+
+    def initialize(@this); end
 
     def self.init_markup
       return self.new
@@ -48,12 +47,8 @@ module Hedron
       UI.radio_buttons_set_selected(to_unsafe, index)
     end
 
-    def set_property(key : String, value : Any)
-      gen_properties({"stretchy" => Bool, "selected" => Int32})
-    end
-
     def to_unsafe
-      return @this
+      return @this.as(UI::RadioButtons*)
     end
   end
 end

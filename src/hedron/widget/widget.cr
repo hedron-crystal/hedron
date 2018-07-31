@@ -1,5 +1,4 @@
 require "../any.cr"
-require "../control.cr"
 require "../render.cr"
 
 module Hedron
@@ -84,27 +83,27 @@ module Hedron
     # end
     # ```
     macro gen_properties(props)
-      {% begin %}
-        case key
-        {% for key, val in props %}
-          when {{key}}
-            self.{{key.id}} = value.as({{val}})
+      def set_property(key : String, value : Any)
+        {% begin %}
+          case key
+          {% for key, val in props %}
+            when {{key}}
+              self.{{key.id}} = value.as({{val}})
+          {% end %}
+            else
+              raise ParseError.new("No such property: #{key}")
+          end
         {% end %}
-          else
-            raise ParseError.new("No such property: #{key}")
-        end
-      {% end %}
+      end
     end
 
     # Allows for HDML to set a property. In your `set_property` function,
     # you must call the `gen_properties` function, as well as provide a hash
     # with property names and their corresponding classes:
     # ```crystal
-    # def set_property(key : String, value : Any)
-    #   gen_properties({
-    #     "foo" => Int32,
-    #   })
-    # end
+    # gen_properties({
+    #   "foo" => Int32
+    # })
     # ```
     # The list of classes supported can be found in Hedron::Any.
     def set_property(key : String, value : Any)

@@ -1,17 +1,15 @@
 require "../bindings.cr"
-require "../control.cr"
-require "../widget/*"
+require "../widget/control.cr"
+
 
 module Hedron
-  class Entry < Widget
-    include Control
-
+  class Entry < Control
     @@box : Void*?
 
-    @this : UI::Entry*
+    gen_properties({"stretchy" => Bool, "read_only" => Bool, "text" => String})
 
     def initialize
-      @this = UI.new_entry
+      @this = ui_control(UI.new_entry)
     end
 
     def initialize(@this); end
@@ -30,7 +28,7 @@ module Hedron
 
       new_proc = ->(entry : UI::Entry*, data : Void*) {
         callback = ::Box(Proc(Entry, Nil)).unbox(data)
-        callback.call(Entry.new(entry))
+        callback.call(Entry.new(ui_control(entry)))
       }
 
       UI.entry_on_changed(to_unsafe, new_proc, boxed_data)
@@ -52,24 +50,20 @@ module Hedron
       UI.entry_set_text(to_unsafe, entry_text)
     end
 
-    def set_property(key : String, value : Any)
-      gen_properties({"stretchy" => Bool, "read_only" => Bool, "text" => String})
-    end
-
     def to_unsafe
-      return @this
+      return @this.as(UI::Entry*)
     end
   end
 
   class PasswordEntry < Entry
     def initialize
-      @this = UI.new_password_entry
+      @this = ui_control(UI.new_password_entry)
     end
   end
 
   class SearchEntry < Entry
     def initialize
-      @this = UI.new_search_entry
+      @this = ui_control(UI.new_search_entry)
     end
   end
 end

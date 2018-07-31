@@ -1,8 +1,13 @@
-require "./bindings.cr"
+require "../bindings.cr"
+require "./widget.cr"
 
 module Hedron
-  private module Control
+  private class Control < Widget
     property stretchy = false
+
+    @this : UI::Control*
+
+    def initialize(@this); end
 
     def ==(control : Control) : Bool
       return to_unsafe == control.to_unsafe
@@ -14,6 +19,10 @@ module Hedron
 
     def disable
       UI.control_disable(ui_control(to_unsafe))
+    end
+
+    def dup
+      return self.new(@this)
     end
 
     def enable

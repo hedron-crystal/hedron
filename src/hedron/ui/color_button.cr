@@ -1,17 +1,16 @@
 require "../bindings.cr"
 require "../struct/color.cr"
-require "../control.cr"
-require "../widget/*"
+require "../widget/control.cr"
 
 module Hedron
-  class ColorButton < Widget
-    include Control
-
-    @this : UI::ColorButton*
+  class ColorButton < Control
+    gen_properties({"stretchy" => Bool})
 
     def initialize
-      @this = UI.new_color_button
+      @this = ui_control(UI.new_color_button)
     end
+
+    def initialize(@this); end
 
     def self.init_markup
       return self.new
@@ -25,12 +24,8 @@ module Hedron
       UI.color_button_set_color(to_unsafe, color.red, color.green, color.blue, color.alpha)
     end
 
-    def set_property(key : String, value : Any)
-      gen_properties({"stretchy" => Bool})
-    end
-
     def to_unsafe
-      return @this
+      return @this.as(UI::ColorButton*)
     end
   end
 end
