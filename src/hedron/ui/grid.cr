@@ -7,7 +7,8 @@ module Hedron
   struct GridCell
     property size : Tuple(Int32, Int32)
     property expand : Tuple(Bool, Bool)
-    property align : Tuple(Align, Align)
+    property align_x : Align
+    property align_y : Align
 
     def initialize(@size, @expand, @align); end
   end
@@ -26,8 +27,8 @@ module Hedron
         ui_control(next_to.control.to_unsafe),
         side,
         cell_info.size[0], cell_info.size[1],
-        to_int(cell_info.expand[0]), cell_info.align[0].value,
-        to_int(cell_info.expand[1]), cell_info.align[1].value
+        to_int(cell_info.expand[0]), cell_info.align_x.value,
+        to_int(cell_info.expand[1]), cell_info.align_y.value
       )
     end
 

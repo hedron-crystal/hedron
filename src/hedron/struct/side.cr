@@ -1,8 +1,8 @@
 module Hedron
   enum Side
-    Leading
+    Left
     Top
-    Trailing
+    Right
     Bottom
   end
 end

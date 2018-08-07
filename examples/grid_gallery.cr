@@ -24,9 +24,10 @@ class GridGallery < Hedron::Application
     grid.padded = true
 
     cell_info = Hedron::GridCell.new(
-      size: {1, 1},
-      expand: {false, false},
-      align: {Hedron::Align::Fill, Hedron::Align::Fill}
+      size:    {1, 1},
+      expand:  {false, false},
+      align_x: :fill,
+      align_y: :fill
     )
 
     grid.push(Hedron::Label.new("Name"), {0, 0}, cell_info)
