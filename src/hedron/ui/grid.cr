@@ -10,7 +10,7 @@ module Hedron
     property align_x : Align
     property align_y : Align
 
-    def initialize(@size, @expand, @align); end
+    def initialize(@size, @expand, @align_x, @align_y); end
   end
 
   class Grid < Control
