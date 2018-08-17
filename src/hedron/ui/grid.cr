@@ -10,12 +10,12 @@ module Hedron
     property align_x : Align
     property align_y : Align
 
-    def initialize(@size, @expand, @align_x, @align_y); end
+    def initialize(@size, @expand, @align_x : Align, @align_y : Align); end
   end
 
   class Grid < Control
     def initialize
-      @this = UI.new_grid
+      @this = ui_control(UI.new_grid)
     end
 
     def initialize(@this); end
