@@ -23,7 +23,7 @@ module Hedron
       return button_font
     end
 
-    def on_change=(&block : FontButton ->)
+    def on_change(&block : FontButton ->)
       self.on_change = block
     end
 
