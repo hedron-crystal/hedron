@@ -46,8 +46,8 @@ module Hedron
         ui_control(widget.control.to_unsafe),
         coords[0], coords[1],
         cell_info.size[0], cell_info.size[1],
-        to_int(cell_info.expand[0]), cell_info.align[0].value,
-        to_int(cell_info.expand[1]), cell_info.align[1].value
+        to_int(cell_info.expand[0]), cell_info.align_x.value,
+        to_int(cell_info.expand[1]), cell_info.align_y.value
       )
     end
 
