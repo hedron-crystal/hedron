@@ -14,7 +14,7 @@ module Hedron
     def self.init_markup
       return self.new
     end
-    
+
     def to_unsafe
       return @this.as(UI::DateTimePicker*)
     end

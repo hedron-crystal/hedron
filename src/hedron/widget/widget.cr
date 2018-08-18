@@ -30,8 +30,8 @@ module Hedron
     # You can access your arguments like so:
     # ```crystal
     # args["bar"].as(Bool) # All results from MLArgs are Hedron::Any,
-    #                      # so you may need to cast to a more specific type
-    #                      # before using.
+    # # so you may need to cast to a more specific type
+    # # before using.
     # ```
     def self.init_markup : Widget
       raise ParseError.new("Widget initialization has not been implemented")
@@ -53,8 +53,8 @@ module Hedron
     # You can access your arguments like so:
     # ```crystal
     # args["bar"].as(Bool) # All results from MLArgs are Hedron::Any,
-    #                      # so you may need to cast to a more specific type
-    #                      # before using.
+    # # so you may need to cast to a more specific type
+    # # before using.
     # ```
     def self.init_markup(args : MLArgs) : Widget
       raise ParseError.new("Widget initialization has not been implemented")
@@ -102,7 +102,7 @@ module Hedron
     # with property names and their corresponding classes:
     # ```crystal
     # gen_properties({
-    #   "foo" => Int32
+    #   "foo" => Int32,
     # })
     # ```
     # The list of classes supported can be found in Hedron::Any.

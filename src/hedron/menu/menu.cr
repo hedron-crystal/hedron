@@ -1,6 +1,5 @@
 require "../bindings.cr"
 
-
 module Hedron
   class Menu
     @this : UI::Menu*

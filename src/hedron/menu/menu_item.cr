@@ -38,8 +38,8 @@ module Hedron
       @@box = boxed_data
       @@item = self
       new_proc = ->(item : UI::MenuItem*, window : UI::Window*, data : Void*) {
-       callback = ::Box(Proc(MenuItem, Nil)).unbox(data)
-       callback.call(@@item.not_nil!)
+        callback = ::Box(Proc(MenuItem, Nil)).unbox(data)
+        callback.call(@@item.not_nil!)
       }
       UI.menu_item_on_clicked(to_unsafe, new_proc, boxed_data)
     end

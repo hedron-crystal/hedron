@@ -1,11 +1,10 @@
 require "../bindings.cr"
 require "../widget/control.cr"
 
-
 module Hedron
   class Button < Control
     gen_properties({"stretchy" => Bool, "text" => String})
-    
+
     @@box : Void*?
 
     def initialize(text : String)

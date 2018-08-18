@@ -4,7 +4,7 @@ require "../widget/control.cr"
 module Hedron
   class MultilineEntry < Control
     gen_properties({
-      "stretchy" => Bool, "read_only" => Bool, "text" => String
+      "stretchy" => Bool, "read_only" => Bool, "text" => String,
     })
 
     def initialize

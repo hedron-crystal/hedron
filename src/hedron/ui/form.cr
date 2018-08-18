@@ -1,7 +1,6 @@
 require "../bindings.cr"
 require "../widget/control.cr"
 
-
 module Hedron
   class Form < Control
     def initialize

@@ -1,149 +1,193 @@
 @[Link(ldflags: "-lui")]
 lib UI
-  UIDRAWDEFAULTMITERLIMIT     =                                                             10.0
-  UIPI                        = 3.14159265358979323846264338327950288419716939937510582097494459
-  AlignCenter                 =                                                                2
-  AlignEnd                    =                                                                3
-  AlignFill                   =                                                                0
-  AlignStart                  =                                                                1
-  AtBottom                    =                                                                3
-  AtLeading                   =                                                                0
-  AtTop                       =                                                                1
-  AtTrailing                  =                                                                2
-  AttributeTypeBackground     =                                                                6
-  AttributeTypeColor          =                                                                5
-  AttributeTypeFamily         =                                                                0
-  AttributeTypeFeatures       =                                                                9
-  AttributeTypeItalic         =                                                                3
-  AttributeTypeSize           =                                                                1
-  AttributeTypeStretch        =                                                                4
-  AttributeTypeUnderline      =                                                                7
-  AttributeTypeUnderlineColor =                                                                8
-  AttributeTypeWeight         =                                                                2
-  DrawBrushTypeImage          =                                                                3
-  DrawBrushTypeLinearGradient =                                                                1
-  DrawBrushTypeRadialGradient =                                                                2
-  DrawBrushTypeSolid          =                                                                0
-  DrawFillModeAlternate       =                                                                1
-  DrawFillModeWinding         =                                                                0
-  DrawLineCapFlat             =                                                                0
-  DrawLineCapRound            =                                                                1
-  DrawLineCapSquare           =                                                                2
-  DrawLineJoinBevel           =                                                                2
-  DrawLineJoinMiter           =                                                                0
-  DrawLineJoinRound           =                                                                1
-  DrawTextAlignCenter         =                                                                1
-  DrawTextAlignLeft           =                                                                0
-  DrawTextAlignRight          =                                                                2
-  ExtKeyDelete                =                                                                3
-  ExtKeyDown                  =                                                                9
-  ExtKeyEnd                   =                                                                5
-  ExtKeyEscape                =                                                                1
-  ExtKeyF1                    =                                                               12
-  ExtKeyF10                   =                                                               21
-  ExtKeyF11                   =                                                               22
-  ExtKeyF12                   =                                                               23
-  ExtKeyF2                    =                                                               13
-  ExtKeyF3                    =                                                               14
-  ExtKeyF4                    =                                                               15
-  ExtKeyF5                    =                                                               16
-  ExtKeyF6                    =                                                               17
-  ExtKeyF7                    =                                                               18
-  ExtKeyF8                    =                                                               19
-  ExtKeyF9                    =                                                               20
-  ExtKeyHome                  =                                                                4
-  ExtKeyInsert                =                                                                2
-  ExtKeyLeft                  =                                                               10
-  ExtKeyN0                    =                                                               24
-  ExtKeyN1                    =                                                               25
-  ExtKeyN2                    =                                                               26
-  ExtKeyN3                    =                                                               27
-  ExtKeyN4                    =                                                               28
-  ExtKeyN5                    =                                                               29
-  ExtKeyN6                    =                                                               30
-  ExtKeyN7                    =                                                               31
-  ExtKeyN8                    =                                                               32
-  ExtKeyN9                    =                                                               33
-  ExtKeyNAdd                  =                                                               36
-  ExtKeyNDivide               =                                                               39
-  ExtKeyNDot                  =                                                               34
-  ExtKeyNEnter                =                                                               35
-  ExtKeyNMultiply             =                                                               38
-  ExtKeyNSubtract             =                                                               37
-  ExtKeyPageDown              =                                                                7
-  ExtKeyPageUp                =                                                                6
-  ExtKeyRight                 =                                                               11
-  ExtKeyUp                    =                                                                8
-  ForEachContinue             =                                                                0
-  ForEachStop                 =                                                                1
-  ModifierAlt                 =                                                                2
-  ModifierCtrl                =                                                                1
-  ModifierShift               =                                                                4
-  ModifierSuper               =                                                                8
-  TextItalicItalic            =                                                                2
-  TextItalicNormal            =                                                                0
-  TextItalicOblique           =                                                                1
-  TextStretchCondensed        =                                                                2
-  TextStretchExpanded         =                                                                6
-  TextStretchExtraCondensed   =                                                                1
-  TextStretchExtraExpanded    =                                                                7
-  TextStretchNormal           =                                                                4
-  TextStretchSemiCondensed    =                                                                3
-  TextStretchSemiExpanded     =                                                                5
-  TextStretchUltraCondensed   =                                                                0
-  TextStretchUltraExpanded    =                                                                8
-  TextWeightBold              =                                                              700
-  TextWeightBook              =                                                              350
-  TextWeightHeavy             =                                                              900
-  TextWeightLight             =                                                              300
-  TextWeightMaximum           =                                                             1000
-  TextWeightMedium            =                                                              500
-  TextWeightMinimum           =                                                                0
-  TextWeightNormal            =                                                              400
-  TextWeightSemiBold          =                                                              600
-  TextWeightThin              =                                                              100
-  TextWeightUltraBold         =                                                              800
-  TextWeightUltraHeavy        =                                                              950
-  TextWeightUltraLight        =                                                              200
-  UnderlineColorAuxiliary     =                                                                3
-  UnderlineColorCustom        =                                                                0
-  UnderlineColorGrammar       =                                                                2
-  UnderlineColorSpelling      =                                                                1
-  UnderlineDouble             =                                                                2
-  UnderlineNone               =                                                                0
-  UnderlineSingle             =                                                                1
-  UnderlineSuggestion         =                                                                3
-  WindowResizeEdgeBottom      =                                                                3
-  WindowResizeEdgeBottomLeft  =                                                                6
-  WindowResizeEdgeBottomRight =                                                                7
-  WindowResizeEdgeLeft        =                                                                0
-  WindowResizeEdgeRight       =                                                                2
-  WindowResizeEdgeTop         =                                                                1
-  WindowResizeEdgeTopLeft     =                                                                4
-  WindowResizeEdgeTopRight    =                                                                5
+  DRAWDEFAULTMITERLIMIT = 10.0
+  PI                    = 3.14159265358979323846264338327950288419716939937510582097494459
+  TABLEMODELCOLUMNNEVEREDITABLE = -1
+  TABLEMODELCOLUMNALWAYSEDITABLE = -2
 
-  alias Align = LibC::UInt
-  alias At = LibC::UInt
-  alias AttributeType = LibC::UInt
   alias AttributedStringForEachAttributeFunc = (AttributedString*, Attribute*, LibC::SizeT, LibC::SizeT, Void* -> ForEach)
-  alias DrawBrushType = LibC::UInt
-  alias DrawFillMode = LibC::UInt
-  alias DrawLineCap = LibC::UInt
-  alias DrawLineJoin = LibC::UInt
-  alias DrawTextAlign = LibC::UInt
-  alias ExtKey = LibC::UInt
-  alias ForEach = LibC::UInt
-  alias Modifiers = LibC::UInt
   alias OpenTypeFeaturesForEachFunc = (OpenTypeFeatures*, LibC::Char, LibC::Char, LibC::Char, LibC::Char, Uint32T, Void* -> ForEach)
-  alias TextItalic = LibC::UInt
-  alias TextStretch = LibC::UInt
-  alias TextWeight = LibC::UInt
-  alias Underline = LibC::UInt
-  alias UnderlineColor = LibC::UInt
-  alias WindowResizeEdge = LibC::UInt
   alias Uint32T = LibC::UInt
   alias Uint64T = LibC::ULongLong
   alias UintptrT = LibC::ULong
+
+  enum Align : LibC::UInt
+    Fill
+    Start
+    Center
+    End
+  end
+
+  enum At : LibC::UInt
+    Leading
+    Top
+    Trailing
+    Bottom
+  end
+
+  enum AttributeType : LibC::UInt
+    Family
+    Size
+    Weight
+    Italic
+    Stretch
+    Color
+    Background
+    Underline
+    UnderlineColor
+    Features
+  end
+
+  enum DrawBushType : LibC::UInt
+    Solid
+    LinearGradient
+    RadialGradient
+    Image
+  end
+
+  enum DrawFillMode : LibC::UInt
+    Winding
+    Alternate
+  end
+
+  enum DrawLineCap : LibC::UInt
+    Flat
+    Round
+    Square
+  end
+
+  enum DrawLineJoin : LibC::UInt
+    Miter
+    Round
+    Bevel
+  end
+
+  enum DrawTextAlign : LibC::UInt
+    Left
+    Center
+    Right
+  end
+
+  enum ExtKey : LibC::UInt
+    Escape    = 1
+    Insert
+    Delete
+    Home
+    End
+    PageUp
+    PageDown
+    Up
+    Down
+    Left
+    Right
+    F1
+    F2
+    F3
+    F4
+    F5
+    F6
+    F7
+    F8
+    F9
+    F10
+    F11
+    F12
+    N0
+    N1
+    N2
+    N3
+    N4
+    N5
+    N6
+    N7
+    N8
+    N9
+    NDot
+    NEnter
+    NAdd
+    NSubtract
+    NMultiply
+    NDivide
+  end
+
+  enum ForEach : LibC::UInt
+    Continue
+    Stop
+  end
+
+  @[Flags]
+  enum Modifier : LibC::UInt
+    Ctrl
+    Alt
+    Shift
+    Super
+  end
+
+  enum TableValueType : LibC::UInt
+    String
+    Image
+    Int
+    Color
+  end
+
+  enum TextItalic : LibC::UInt
+    Normal
+    Oblique
+    Italic
+  end
+
+  enum TextStretch : LibC::UInt
+    UltraCondensed
+    ExtraCondensed
+    Condensed
+    SemiCondensed
+    Normal
+    SemiExpanded
+    Expanded
+    ExtraExpanded
+    UltraExpanded
+  end
+
+  enum TextWeight : LibC::UInt
+    Minimum    =    0
+    Thin       =  100
+    UltraLight =  200
+    Light      =  300
+    Book       =  350
+    Normal     =  400
+    Medium     =  500
+    SemiBold   =  600
+    Bold       =  700
+    UltraBold  =  800
+    Heavy      =  900
+    UltraHeavy =  950
+    Maximum    = 1000
+  end
+
+  enum Underline : LibC::UInt
+    None
+    Single
+    Double
+    Suggestion
+  end
+
+  enum UnderlineColor : LibC::UInt
+    Custom
+    Spelling
+    Grammar
+    Auxiliary
+  end
+
+  enum WindowResizeEdge : LibC::UInt
+    Left
+    Top
+    Right
+    Bottom
+    TopLeft
+    TopRight
+    BottomLeft
+    BottomRight
+  end
 
   fun alloc_control = uiAllocControl(n : LibC::SizeT, o_ssig : Uint32T, typesig : Uint32T, typenamestr : LibC::Char*) : Control*
 
@@ -270,8 +314,11 @@ lib UI
   fun free_attributed_string = uiFreeAttributedString(s : AttributedString*)
   fun free_control = uiFreeControl(x0 : Control*)
   fun free_font_button_font = uiFreeFontButtonFont(desc : FontDescriptor*)
+  fun free_image = uiFreeImage(i : Image*)
   fun free_init_error = uiFreeInitError(err : LibC::Char*)
   fun free_open_type_features = uiFreeOpenTypeFeatures(otf : OpenTypeFeatures*)
+  fun free_table_model = uiFreeTableModel(m : TableModel*)
+  fun free_table_value = uiFreeTableValue(v : TableValue*)
   fun free_text = uiFreeText(text : LibC::Char*)
 
   fun grid_append = uiGridAppend(g : Grid*, c : Control*, left : LibC::Int, top : LibC::Int, xspan : LibC::Int, yspan : LibC::Int, hexpand : LibC::Int, halign : Align, vexpand : LibC::Int, valign : Align)
@@ -285,12 +332,15 @@ lib UI
   fun group_set_title = uiGroupSetTitle(g : Group*, title : LibC::Char*)
   fun group_title = uiGroupTitle(g : Group*) : LibC::Char*
 
+  fun image_append = uiImageAppend(i : Image*, pixels : Void*, pixel_width : LibC::Int, pixel_height : LibC::Int, byte_stride : LibC::Int)
+
   fun init = uiInit(options : InitOptions*) : LibC::Char*
 
   fun label_set_text = uiLabelSetText(l : Label*, text : LibC::Char*)
   fun label_text = uiLabelText(l : Label*) : LibC::Char*
 
   fun main = uiMain
+
   fun main_step = uiMainStep(wait : LibC::Int) : LibC::Int
   fun main_steps = uiMainSteps
 
@@ -338,6 +388,7 @@ lib UI
   fun new_horizontal_box = uiNewHorizontalBox : Box*
   fun new_horizontal_separator = uiNewHorizontalSeparator : Separator*
   fun new_italic_attribute = uiNewItalicAttribute(italic : TextItalic) : Attribute*
+  fun new_image = uiNewImage(width : LibC::Double, height : LibC::Double) : Image*
   fun new_label = uiNewLabel(text : LibC::Char*) : Label*
   fun new_menu = uiNewMenu(name : LibC::Char*) : Menu*
   fun new_multiline_entry = uiNewMultilineEntry : MultilineEntry*
@@ -353,6 +404,12 @@ lib UI
   fun new_spinbox = uiNewSpinbox(min : LibC::Int, max : LibC::Int) : Spinbox*
   fun new_stretch_attribute = uiNewStretchAttribute(stretch : TextStretch) : Attribute*
   fun new_tab = uiNewTab : Tab*
+  fun new_table = uiNewTable(params : TableParams*) : Table*
+  fun new_table_model = uiNewTableModel(mh : TableModelHandler*) : TableModel*
+  fun new_table_value_color = uiNewTableValueColor(r : LibC::Double, g : LibC::Double, b : LibC::Double, a : LibC::Double) : TableValue*
+  fun new_table_value_image = uiNewTableValueImage(img : Image*) : TableValue*
+  fun new_table_value_int = uiNewTableValueInt(i : LibC::Int) : TableValue*
+  fun new_table_value_string = uiNewTableValueString(str : LibC::Char*) : TableValue*
   fun new_time_picker = uiNewTimePicker : DateTimePicker*
   fun new_underline_attribute = uiNewUnderlineAttribute(u : Underline) : Attribute*
   fun new_underline_color_attribute = uiNewUnderlineColorAttribute(u : UnderlineColor, r : LibC::Double, g : LibC::Double, b : LibC::Double, a : LibC::Double) : Attribute*
@@ -400,6 +457,24 @@ lib UI
   fun tab_num_pages = uiTabNumPages(t : Tab*) : LibC::Int
   fun tab_set_margined = uiTabSetMargined(t : Tab*, page : LibC::Int, margined : LibC::Int)
 
+  fun table_append_text_column = uiTableAppendTextColumn(t : Table*, name : LibC::Char*, text_model_column : LibC::Int, text_editable_model_column : LibC::Int, text_params : TableTextColumnOptionalParams*)
+  fun table_append_image_column = uiTableAppendImageColumn(t : Table*, name : LibC::Char*, image_model_column : LibC::Int)
+  fun table_append_image_text_column = uiTableAppendImageTextColumn(t : Table*, name : LibC::Char*, image_model_column : LibC::Int, text_model_column : LibC::Int, text_editable_model_column : LibC::Int, text_params : TableTextColumnOptionalParams*)
+  fun table_append_checkbox_column = uiTableAppendCheckboxColumn(t : Table*, name : LibC::Char*, checkbox_model_column : LibC::Int, checkbox_editable_model_column : LibC::Int)
+  fun table_append_checkbox_text_column = uiTableAppendCheckboxTextColumn(t : Table*, name : LibC::Char*, checkbox_model_column : LibC::Int, checkbox_editable_model_column : LibC::Int, text_model_column : LibC::Int, text_editable_model_column : LibC::Int, text_params : TableTextColumnOptionalParams*)
+  fun table_append_progress_bar_column = uiTableAppendProgressBarColumn(t : Table*, name : LibC::Char*, progress_model_column : LibC::Int)
+  fun table_append_button_column = uiTableAppendButtonColumn(t : Table*, name : LibC::Char*, button_model_column : LibC::Int, button_clickable_model_column : LibC::Int)
+
+  fun table_model_row_changed = uiTableModelRowChanged(m : TableModel*, index : LibC::Int)
+  fun table_model_row_deleted = uiTableModelRowDeleted(m : TableModel*, old_index : LibC::Int)
+  fun table_model_row_inserted = uiTableModelRowInserted(m : TableModel*, new_index : LibC::Int)
+
+  fun table_value_color = uiTableValueColor(v : TableValue*, r : LibC::Double*, g : LibC::Double*, b : LibC::Double*, a : LibC::Double*)
+  fun table_value_image = uiTableValueImage(v : TableValue*) : Image*
+  fun table_value_int = uiTableValueInt(v : TableValue*) : LibC::Int
+  fun table_value_string = uiTableValueString(v : TableValue*) : LibC::Char*
+  fun table_value_type = uiTableValueGetType(v : TableValue*) : TableValueType
+
   fun uninit = uiUninit
 
   fun user_bug_cannot_set_parent_on_toplevel = uiUserBugCannotSetParentOnToplevel(type : LibC::Char*)
@@ -439,8 +514,8 @@ lib UI
   struct AreaKeyEvent
     key : LibC::Char
     ext_key : ExtKey
-    modifier : Modifiers
-    modifiers : Modifiers
+    modifier : Modifier
+    modifiers : Modifier
     up : LibC::Int
   end
 
@@ -452,7 +527,7 @@ lib UI
     down : LibC::Int
     up : LibC::Int
     count : LibC::Int
-    modifiers : Modifiers
+    modifiers : Modifier
     held1_to64 : Uint64T
   end
 
@@ -534,6 +609,23 @@ lib UI
     size : LibC::SizeT
   end
 
+  struct TableModelHandler
+    num_columns : (TableModelHandler*, TableModel* -> LibC::Int)
+    column_type : (TableModelHandler*, TableModel*, LibC::Int -> TableValueType)
+    num_rows : (TableModelHandler*, TableModel* -> LibC::Int)
+    cell_value : (TableModelHandler*, TableModel*, LibC::Int, LibC::Int -> TableValue*)
+    set_cell_value : (TableModelHandler*, TableModel*, LibC::Int, LibC::Int, TableValue*)
+  end
+
+  struct TableParams
+    model : TableModel*
+    row_background_color_model_column : LibC::Int
+  end
+  
+  struct TableTextColumnOptionalParams
+    color_model_column : LibC::Int
+  end
+
   type Area = Void*
   type Attribute = Void*
   type AttributedString = Void*
@@ -552,6 +644,7 @@ lib UI
   type Form = Void*
   type Grid = Void*
   type Group = Void*
+  type Image = Void*
   type Label = Void*
   type Menu = Void*
   type MenuItem = Void*
@@ -563,6 +656,9 @@ lib UI
   type Slider = Void*
   type Spinbox = Void*
   type Tab = Void*
+  type Table = Void*
+  type TableModel = Void*
+  type TableValue = Void*
   type Window = Void*
 end
 
