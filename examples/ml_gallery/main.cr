@@ -34,3 +34,7 @@ class MLGallery < Hedron::Application
     @window.not_nil!.show
   end
 end
+
+gallery = MLGallery.new
+gallery.start
+gallery.close

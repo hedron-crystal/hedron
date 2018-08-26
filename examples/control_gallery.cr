@@ -57,23 +57,23 @@ class ControlGallery < Hedron::Application
     open = Hedron::MenuItem.new(file_menu, "Open")
     save = Hedron::MenuItem.new(file_menu, "Save")
 
-    file_menu.add_quit
+    file_menu.push(:quit)
     self.on_stop = ->should_quit
 
     edit_menu = Hedron::Menu.new("Edit")
     checkable = Hedron::MenuCheckItem.new(edit_menu, "Checkable item")
 
-    edit_menu.add_separator
+    edit_menu.push(:separator)
 
     disabled = Hedron::MenuItem.new(edit_menu, "Disabled Item")
     disabled.disable
 
-    edit_menu.add_preferences
+    edit_menu.push(:preferences)
 
     help_menu = Hedron::Menu.new("Help")
     help = Hedron::MenuItem.new(help_menu, "Help")
 
-    help_menu.add_about
+    help_menu.push(:about)
 
     @mainwin = Hedron::Window.new("Hedron Control Gallery", {640, 480}, menubar: true)
     mainwin = @mainwin.not_nil!

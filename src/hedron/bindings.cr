@@ -38,7 +38,7 @@ lib UI
     Features
   end
 
-  enum DrawBushType : LibC::UInt
+  enum DrawBrushType : LibC::UInt
     Solid
     LinearGradient
     RadialGradient
@@ -457,13 +457,13 @@ lib UI
   fun tab_num_pages = uiTabNumPages(t : Tab*) : LibC::Int
   fun tab_set_margined = uiTabSetMargined(t : Tab*, page : LibC::Int, margined : LibC::Int)
 
-  fun table_append_text_column = uiTableAppendTextColumn(t : Table*, name : LibC::Char*, text_model_column : LibC::Int, text_editable_model_column : LibC::Int, text_params : TableTextColumnOptionalParams*)
-  fun table_append_image_column = uiTableAppendImageColumn(t : Table*, name : LibC::Char*, image_model_column : LibC::Int)
-  fun table_append_image_text_column = uiTableAppendImageTextColumn(t : Table*, name : LibC::Char*, image_model_column : LibC::Int, text_model_column : LibC::Int, text_editable_model_column : LibC::Int, text_params : TableTextColumnOptionalParams*)
+  fun table_append_button_column = uiTableAppendButtonColumn(t : Table*, name : LibC::Char*, button_model_column : LibC::Int, button_clickable_model_column : LibC::Int)
   fun table_append_checkbox_column = uiTableAppendCheckboxColumn(t : Table*, name : LibC::Char*, checkbox_model_column : LibC::Int, checkbox_editable_model_column : LibC::Int)
   fun table_append_checkbox_text_column = uiTableAppendCheckboxTextColumn(t : Table*, name : LibC::Char*, checkbox_model_column : LibC::Int, checkbox_editable_model_column : LibC::Int, text_model_column : LibC::Int, text_editable_model_column : LibC::Int, text_params : TableTextColumnOptionalParams*)
+  fun table_append_image_column = uiTableAppendImageColumn(t : Table*, name : LibC::Char*, image_model_column : LibC::Int)
+  fun table_append_image_text_column = uiTableAppendImageTextColumn(t : Table*, name : LibC::Char*, image_model_column : LibC::Int, text_model_column : LibC::Int, text_editable_model_column : LibC::Int, text_params : TableTextColumnOptionalParams*)
   fun table_append_progress_bar_column = uiTableAppendProgressBarColumn(t : Table*, name : LibC::Char*, progress_model_column : LibC::Int)
-  fun table_append_button_column = uiTableAppendButtonColumn(t : Table*, name : LibC::Char*, button_model_column : LibC::Int, button_clickable_model_column : LibC::Int)
+  fun table_append_text_column = uiTableAppendTextColumn(t : Table*, name : LibC::Char*, text_model_column : LibC::Int, text_editable_model_column : LibC::Int, text_params : TableTextColumnOptionalParams*)
 
   fun table_model_row_changed = uiTableModelRowChanged(m : TableModel*, index : LibC::Int)
   fun table_model_row_deleted = uiTableModelRowDeleted(m : TableModel*, old_index : LibC::Int)
@@ -614,7 +614,7 @@ lib UI
     column_type : (TableModelHandler*, TableModel*, LibC::Int -> TableValueType)
     num_rows : (TableModelHandler*, TableModel* -> LibC::Int)
     cell_value : (TableModelHandler*, TableModel*, LibC::Int, LibC::Int -> TableValue*)
-    set_cell_value : (TableModelHandler*, TableModel*, LibC::Int, LibC::Int, TableValue*)
+    set_cell_value : (TableModelHandler*, TableModel*, LibC::Int, LibC::Int, TableValue* -> Void)
   end
 
   struct TableParams

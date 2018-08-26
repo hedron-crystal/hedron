@@ -1,0 +1,10 @@
+version: 1.0
+shards:
+  stumpy_core:
+    github: stumpycr/stumpy_core
+    version: 1.8.2
+
+  stumpy_png:
+    github: stumpycr/stumpy_png
+    version: 4.4.1
+

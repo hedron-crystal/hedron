@@ -7,6 +7,11 @@ authors:
 description: |
   A simple OOP UI library, with custom markup integration.
 
-crystal: 0.24.1
+dependencies:
+  stumpy_png:
+    github: stumpycr/stumpy_png
+    version: "~>4.4.1"
+
+crystal: 0.26.0
 
 license: MIT
