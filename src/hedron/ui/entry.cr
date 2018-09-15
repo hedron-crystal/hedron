@@ -42,7 +42,7 @@ module Hedron
     end
 
     def text : String
-      return UI.entry_text(to_unsafe)
+      return String.new(UI.entry_text(to_unsafe))
     end
 
     def text=(entry_text : String)
