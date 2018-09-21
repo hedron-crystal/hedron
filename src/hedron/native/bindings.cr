@@ -661,23 +661,3 @@ lib UI
   type TableValue = Void*
   type Window = Void*
 end
-
-macro ui_control(control)
-  {{control}}.unsafe_as(Pointer(UI::Control))
-end
-
-macro ui_box(control)
-  {{control}}.unsafe_as(Pointer(UI::Box))
-end
-
-macro ui_nil?(ptr)
-  {{ptr}}.null?
-end
-
-def to_int(bool : Bool) : Int32
-  return bool ? 1 : 0
-end
-
-def to_bool(int : Int32) : Bool
-  return int == 1 ? true : false
-end

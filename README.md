@@ -21,10 +21,18 @@ dependencies:
     version: 0.1.0
 ```
 
+## Running examples
+
+1. Install libui, as seen in instructions above.
+2. Clone the project to your device.
+3. Run `shards install` to install external libraries.
+4. You should be able to compile binaries for all the examples - automatic build scripts coming soon.
+
 ## Acknowledgement
 
 - [andlabs/libui](https://github.com/andlabs/libui), for providing the basic UI elements
 - [Fusion/libui.cr](https://github.com/Fusion/libui.cr), for originally providing the libui bindings
+- [stumpycr/stumpy_png](https://github.com/stumpycr/stumpy_png), for providing PNG parsing capabilities (used in `src/hedron/ui/image.cr`)
 
 ## Contributors
 
