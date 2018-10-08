@@ -2,7 +2,7 @@ name: hedron
 version: 0.2.0
 
 authors:
-  - Hanyuan Li <completelyderp@gmail.com>
+  - Hanyuan Li <hanyuan.work@gmail.com>
 
 description: |
   A simple OOP UI library, with custom markup integration.
