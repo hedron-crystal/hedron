@@ -1,7 +1,7 @@
 module Hedron
   class UIException < Exception
-    def initialize(control : Control, error : String)
-      super "UI exception at #{control.class}: #{error}"
+    def initialize(ui : Control | App, error : String)
+      super "UI exception at #{ui.class}: #{error}"
     end
   end
 end

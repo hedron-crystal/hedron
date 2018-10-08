@@ -9,7 +9,7 @@ module Hedron
     # Converts a pointer which is a subclass of Control into
     # a Control pointer.
     def self.cast_ptr(ptr)
-      return ptr.unsafe_as(Pointer(UI::Control))
+      return ptr.as(UI::Control*)
     end
 
     # Converts a C integer value designated as a boolean
@@ -21,6 +21,21 @@ module Hedron
     # Converts a Crystal Bool to either 0 or 1
     def self.to_int(bool) : Int32
       return bool ? 1 : 0
+    end
+
+    def self.to_ptr(obj) : Pointer(UI::Control)
+      return obj.nil? ? Pointer(UI::Control).null : obj.to_unsafe
+    end
+
+    # Converts pointer (which could be `null`) to nilable
+    # object
+    def self.to_obj(ptr) : Control?
+      return ptr.null? ? nil : Control.new(ptr)
+    end
+
+    # Converts a `char*` to a Crystal String
+    def self.to_str(char_ptr) : String
+      return String.new(char_ptr)
     end
 
     ## Overriding default object methods
@@ -57,17 +72,17 @@ module Hedron
     # Removes a parent form the Control. `Control#clear_parent` raises an
     # error when it is called while Control does not have a parent.
     def clear_parent
-      if self.parent.null?
+      if self.parent.nil?
         raise UIException.new(self, "cannot clear a Control that doesn't have a parent.")
       end
 
-      UI.control_set_parent(self.to_unsafe, Pointer.null)
+      UI.control_set_parent(self.to_unsafe, Pointer(UI::Control).null)
     end
 
     # Destroys the Control. Raises an exception if the control has
     # a parent.
     def destroy
-      unless self.parent.null?
+      unless self.parent.nil?
         raise UIException.new(self, "cannot destroy Control while it still has a parent.")
       end
 
@@ -84,13 +99,6 @@ module Hedron
       UI.control_enable(self.to_unsafe)
     end
 
-    # Makes the control enabled or disabled via operator
-    # overloading of `enabled`.
-    def enabled=(bool)
-      return if self.enabled? == bool
-      bool ? self.disable : self.enable
-    end
-
     # Returns whether or not the Control is enabled.
     def enabled?(parents = false) : Bool
       if parents
@@ -98,6 +106,13 @@ module Hedron
       else
         return Control.to_bool(UI.control_enabled(self.to_unsafe))
       end
+    end
+
+    # Makes the control enabled or disabled via operator
+    # overloading of `enabled`.
+    def enabled=(bool)
+      return if self.enabled? == bool
+      bool ? self.disable : self.enable
     end
 
     # Hide the Control from the user.
@@ -109,7 +124,7 @@ module Hedron
     # does not have a parent.
     def parent : Control?
       ptr = UI.control_parent(self.to_unsafe)
-      return (ptr == Pointer.null ? nil : Control.new(ptr))
+      return Control.to_obj(ptr)
     end
 
     # Given another Control, sets that control to be the parent of our Control.
@@ -118,7 +133,7 @@ module Hedron
     def parent=(parent : Control)
       if self.toplevel?
         raise UIException.new(self, "cannot give a toplevel Control a parent.")
-      elsif !parent.nil?
+      elsif !self.parent.nil?
         raise UIException.new(self, "cannot give a Control a parent when it already has one.")
       end
 
@@ -132,7 +147,7 @@ module Hedron
 
     # Returns whether or not the Control is a toplevel Control.
     def toplevel? : Bool
-      Control.to_bool(UI.control_toplevel(self.to_unsafe))
+      return Control.to_bool(UI.control_toplevel(self.to_unsafe))
     end
 
     # Changes the control's visibility via operator overloading
@@ -144,7 +159,7 @@ module Hedron
 
     # Returns whether the Control is visible or not.
     def visible? : Bool
-      Control.to_bool(UI.control_visible(self.to_unsafe))
+      return Control.to_bool(UI.control_visible(self.to_unsafe))
     end
   end
 end
