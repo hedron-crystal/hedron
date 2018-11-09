@@ -46,7 +46,7 @@ module Hedron
     end
 
     def text : String
-      return Strin.new(UI.multiline_entry_text(to_unsafe))
+      return String.new(UI.multiline_entry_text(to_unsafe))
     end
 
     def text=(entry_text : String)
