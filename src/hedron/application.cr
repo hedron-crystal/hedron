@@ -25,8 +25,6 @@ module Hedron
       unless ui_nil?(err)
         raise UIError.new("Error initializing UI: #{String.new(err)}")
       end
-
-      draw
     end
 
     # Start up the application.
