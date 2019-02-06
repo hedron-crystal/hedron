@@ -17,7 +17,7 @@ Hedron is under active development, so check back often!
 ```yaml
 dependencies:
   hedron:
-    github: Qwerp-Derp/hedron
+    github: hedron-crystal/hedron
     version: 0.1.0
 ```
 
